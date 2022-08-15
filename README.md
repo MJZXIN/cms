@@ -1,7 +1,7 @@
 # cms
 空余时间编写的内容管理平台
 
---- shell
+```
 # 安装库
 cd app
 yarn install
@@ -14,4 +14,4 @@ yarn prod
 
 # 构建项目
 yarn build
----
+```
