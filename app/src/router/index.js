@@ -18,8 +18,8 @@ const routes = [
             title: "登录"
         }
     }, {
-        path: "/registry",
-        component: () => import('views/registry.vue'),
+        path: "/register",
+        component: () => import('views/register.vue'),
         meta: {
             title: "注册"
         }
@@ -36,7 +36,7 @@ const router = createRouter({
     history: createWebHistory()
 })
 
-const whiteList = ['/login', '/registry', '/404']
+const whiteList = ['/login', '/register', '/404']
 router.beforeEach((to, from, next) => {
     if (whiteList.includes(to.path) || localStorage.getItem("token")) {
         document.title = to.meta.title
