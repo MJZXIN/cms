@@ -1,5 +1,12 @@
 <template>
-  <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="120px" class="demo-ruleForm">
+  <el-form
+    ref="ruleFormRef"
+    :model="ruleForm"
+    status-icon
+    :rules="rules"
+    label-width="120px"
+    class="demo-ruleForm"
+  >
     <el-form-item label="用户名：" prop="user">
       <el-input v-model="ruleForm.user" type="text" autocomplete="off" />
     </el-form-item>
@@ -7,10 +14,16 @@
       <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
     </el-form-item>
     <el-form-item label="确认密码：" prop="checkPass">
-      <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
+      <el-input
+        v-model="ruleForm.checkPass"
+        type="password"
+        autocomplete="off"
+      />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)">注册</el-button>
+      <el-button type="primary" @click="submitForm(ruleFormRef)"
+        >注册</el-button
+      >
       <el-button @click="goLogin">返回登录</el-button>
     </el-form-item>
   </el-form>
@@ -20,9 +33,9 @@
 import { reactive, ref } from "vue";
 import type { FormInstance } from "element-plus";
 import { rule } from "postcss";
-import useCurrentInstance from "../utils/getCurrentInstance";
-import { registry } from "api/index";
-import router from "../router/index";
+import useCurrentInstance from "../../utils/getCurrentInstance";
+import { registry } from "../../api/index";
+import router from "../../router/index";
 import { ElMessage } from "element-plus";
 
 const ruleFormRef = ref<FormInstance>();
@@ -70,7 +83,7 @@ const rules = reactive({
   pass: [{ validator: validatePass, trigger: "blur" }],
   checkPass: [{ validator: validatePass2, trigger: "blur" }],
 });
-const { proxy } = useCurrentInstance()
+const { proxy } = useCurrentInstance();
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid) => {
@@ -78,7 +91,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log("submit!");
       // registry(ruleForm);
       setTimeout(() => {
-
         console.log(proxy);
         // ElMessage.success("sd")
         // useCurrentInstance.$message.success("0000")
