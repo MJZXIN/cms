@@ -4,3 +4,4 @@ app/node_modules
 api_py/venv
 api_py/.idea
 api_ja/gradle
+*.pyc
