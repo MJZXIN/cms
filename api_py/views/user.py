@@ -87,6 +87,7 @@ class TblPost(db.Model):
     uid = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     postname = db.Column(db.String(128), server_default="", nullable=False)
     deptname = db.Column(db.String(128), server_default="")
+    corpname = db.Column(db.String(128), server_default="")
     create_by = db.Column(db.String(128), server_default="")
     update_by = db.Column(db.String(128), server_default="")
     status = db.Column(db.CHAR(128), server_default="0")
@@ -105,7 +106,7 @@ def CorpImpl():
         for i in obj:
             data_list.append(i.to_dict())
         return Result.SUCCESS(data=data_list)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         corpname = request.json.get("corpname")
         obj = TblCorp.query.filter(TblCorp.corpname == corpname).first()
         if obj:
@@ -123,7 +124,7 @@ def CorpImpl():
         obj = TblCorp.query.filter(TblCorp.uid == request.json.get("uid")).first()
         db.session.delete(obj)
         db.session.flush()
-        return Result.SUCCESS(msg="修改成功")
+        return Result.SUCCESS(msg="删除成功")
 
 
 @user.route('/dept', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -136,10 +137,11 @@ def DeptImpl():
         return Result.SUCCESS(data=data_list)
     elif request.method == 'POST':
         deptname = request.json.get("deptname")
+        corpname = request.json.get("corpname")
         obj = TblDept.query.filter(TblDept.deptname == deptname).first()
         if obj:
             return Result.ERROR(msg="当前部门已存在")
-        obj = TblDept(deptname=deptname)
+        obj = TblDept(deptname=deptname, corpname=corpname)
         db.session.add(obj)
         db.session.flush()
         return Result.SUCCESS(msg="添加成功")
@@ -152,7 +154,7 @@ def DeptImpl():
         obj = TblDept.query.filter(TblDept.uid == request.json.get("uid")).first()
         db.session.delete(obj)
         db.session.flush()
-        return Result.SUCCESS(msg="修改成功")
+        return Result.SUCCESS(msg="删除成功")
 
 
 @user.route('/post', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -165,10 +167,20 @@ def PostImpl():
         return Result.SUCCESS(data=data_list)
     elif request.method == 'POST':
         postname = request.json.get("postname")
-        obj = TblPost.query.filter(TblPost.postname == postname).first()
+        deptname = request.json.get("deptname")
+        corpname = request.json.get("corpname")
+        obj = TblPost.query.filter(TblPost.corpname == corpname).first()
         if obj:
-            return Result.ERROR(msg="当前职位已存在")
-        obj = TblPost(deptname=postname)
+            if obj.deptname == deptname:
+                if obj.postname == postname:
+                    pass
+                else:
+                    return Result.ERROR(msg="当前职位已存在")
+            else:
+                return Result.ERROR(msg="当前部门不存在")
+        else:
+            return Result.ERROR(msg="当前公司不存在")
+        obj = TblPost(postname=postname, deptname=deptname)
         db.session.add(obj)
         db.session.flush()
         return Result.SUCCESS(msg="添加成功")
@@ -181,7 +193,7 @@ def PostImpl():
         obj = TblPost.query.filter(TblPost.uid == request.json.get("uid")).first()
         db.session.delete(obj)
         db.session.flush()
-        return Result.SUCCESS(msg="修改成功")
+        return Result.SUCCESS(msg="删除成功")
 
 
 @user.route('/', methods=['GET', 'POST', 'PUT', 'DELETE'])

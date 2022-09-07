@@ -12,6 +12,7 @@ from utils import Result, JwtImpl, SALT, db
 app = Flask(__name__)
 app.register_blueprint(auth, url_prefix="/api")
 app.register_blueprint(user, url_prefix="/api/user")
+app.register_blueprint(menu, url_prefix="/api")
 
 app.config.from_object(config)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://Festo:Festo4.0@127.0.0.1:3306/cms_db'
@@ -51,7 +52,6 @@ def jwt_authentication():
         4.判断校验结果,成功就提取token中的载荷信息,赋值给g对象保存
         """
     auth = request.headers.get('Authorization')
-    print(request.path)
     whitelist = ["/api", "/api/login", "/api/reg", "/api/adb"]
     index = 0
     for i in whitelist:
@@ -69,22 +69,14 @@ def jwt_authentication():
             try:
                 "判断token的校验结果"
                 payload = jwt.decode(token, SALT, algorithms=['HS256'])
-                if payload.get('userrole') == 'SYSTEM':
-                    pass
-                elif payload.get('userrole') == 'ADMIN' and request.path.startswith('/api/user'):
-                    pass
-                elif payload.get('userrole') == 'USER' and request.path.startswith('/api/auth'):
-                    pass
-                else:
-                    return Result.ERROR(code=403, msg='无权限访问')
             except exceptions.ExpiredSignatureError:  # 'token已失效'
-                return Result.ERROR(msg='token已失效')
+                return Result.ERROR(code=403, msg='token已失效')
             except jwt.DecodeError:  # 'token认证失败'
-                return Result.ERROR(msg='token认证失败')
+                return Result.ERROR(code=403, msg='token认证失败')
             except jwt.InvalidTokenError:  # '非法的token'
-                return Result.ERROR(msg='非法的token')
+                return Result.ERROR(code=403, msg='非法的token')
         else:
-            return Result.ERROR(msg='无身份信息')
+            return Result.ERROR(code=403, msg='无身份信息')
 
 
 @app.route('/api')

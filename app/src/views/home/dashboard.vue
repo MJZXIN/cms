@@ -1,40 +1,43 @@
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+  <div><h1>看板界面</h1></div>
+  <div>
+    <button @click="req()">请求</button>
+    <div>{{ Token }}</div>
   </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <div><button @click="Info">userInfo</button></div>
+  <div>{{ userInfo }}</div>
+  <div><button @click="route">routes</button></div>
+  <div>{{ Routes }}</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from "vue";
+import { userStore } from "@/store/modules/user";
 
-defineProps({
-  msg: String,
-});
+const user = userStore();
 
-const count = ref(0);
+let userInfo = ref(null);
+let Routes = ref(null);
+let Token = ref(null);
+
+const Info = () => {
+  console.log(user);
+  userInfo.value = user.$state.userInfo;
+  console.log(user.$state.userInfo);
+};
+
+const route = () => {
+  console.log(user);
+  Routes.value = user.$state.routes;
+  console.log(user.$state.routes);
+};
+
+const req = () => {
+  console.log(user.$state.token);
+  console.log(user.$state.userInfo);
+  console.log(user.$state.routes);
+  Token.value = user.token;
+};
 </script>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
+<style scoped></style>

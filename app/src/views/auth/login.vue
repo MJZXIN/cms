@@ -6,46 +6,47 @@
     status-icon
     class="demo-ruleForm"
   >
-    <el-form-item label="用户名：" prop="user">
-      <el-input v-model="formData.user" type="text" autocomplete="off" />
+    <el-form-item label="用户名：" prop="username">
+      <el-input v-model="formData.username" type="text" autocomplete="off" />
     </el-form-item>
-    <el-form-item label="密码：" prop="pass">
-      <el-input v-model="formData.pass" type="passwod" autocomplete="off" />
+    <el-form-item label="密码：" prop="password">
+      <el-input
+        v-model="formData.password"
+        type="passwordwod"
+        autocomplete="off"
+      />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm(formRef)">登录</el-button>
       <el-button @click="goRegister">注册</el-button>
     </el-form-item>
   </el-form>
-  <div>
-    {{ user.count }}
-  </div>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import type { FormInstance } from "element-plus";
 import useCurrentInstance from "@/utils/getCurrentInstance";
-import router from "../../router/index";
-import { userStore } from "@/store/user";
-const user = userStore();
+import router from "../../router";
+import { login } from "api/index";
+import { setUserInfo } from "utils/user";
 
 const { proxy } = useCurrentInstance();
 const formRef = ref<FormInstance>();
 
 const formData = reactive({
-  user: "",
-  pass: "",
+  username: "SYSTEM",
+  password: "123456",
 });
 
-const checkUser = (rule: any, value: any, callback: any) => {
+const checkusername = (rule: any, value: any, callback: any) => {
   if (value === "") {
     callback(new Error("请输入用户名"));
   }
   return callback();
 };
 
-const checkPass = (rule: any, value: any, callback: any) => {
+const checkpassword = (rule: any, value: any, callback: any) => {
   if (value === "") {
     callback(new Error("请输入密码"));
   }
@@ -53,26 +54,43 @@ const checkPass = (rule: any, value: any, callback: any) => {
 };
 
 const rules = reactive({
-  user: [{ validator: checkUser, trigger: "blur" }],
-  pass: [{ validator: checkPass, trigger: "blur" }],
+  username: [{ validator: checkusername, trigger: "blur" }],
+  password: [{ validator: checkpassword, trigger: "blur" }],
 });
+
+localStorage.removeItem("USER_INFO");
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
-      console.log("submit!");
-      console.log(proxy);
-      proxy.$message.success("登录成功");
+      // console.log(proxy);
+      console.log(formData);
+      login(formData)
+        .then((res) => {
+          // token.$patch((state) => {
+          //   state.token = "Bearer " + res.data.token;
+          // });
+          // token.user.setUserInfo(res.data.userinfo);
+          setUserInfo(res.data);
+          if (res.code) {
+            proxy.$message.success(res.msg);
+          } else {
+            proxy.$message.error(res.msg);
+          }
+          router.replace("/");
+        })
+        .catch(() => {
+          proxy.$message.error("网络异常,请检查网络");
+        });
     } else {
-      console.log("error submit!");
+      proxy.$message.error("请检查登录信息是否正确");
       return false;
     }
   });
 };
 
 const goRegister = () => {
-  console.log("sjkdhglkjdshgkjgh");
   router.push("/register");
 };
 </script>

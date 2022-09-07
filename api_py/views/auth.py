@@ -7,6 +7,89 @@ from views.user import TblUser
 
 auth = Blueprint("auth", __name__)
 
+routes_list = [
+    {
+        "path": "/",
+        "meta": {
+            "title": "首页",
+            "icon": "",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "components/Layout/layout.vue",
+        "children": [
+            {
+                "path": "/",
+                "name": "dashboard",
+                "meta": {
+                    "title": "看板",
+                    "icon": "",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                }
+            }
+        ]
+    }, {
+        "path": "/login",
+        "meta": {
+            "title": "登录",
+            "icon": "",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "views/auth/login.vue",
+        "children": []
+    }, {
+        "path": "/register",
+        "meta": {
+            "title": "注册",
+            "icon": "",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "views/auth/register.vue",
+        "children": []
+    }, {
+        "path": "/404",
+        "meta": {
+            "title": "404",
+            "icon": "",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "views/error/404.vue",
+        "children": []
+    }, {
+        "path": "/*",
+        "meta": {
+            "title": "404",
+            "icon": "",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "views/error/404.vue",
+        "children": []
+    }
+]
+
 
 @auth.route("/login", methods=['POST'])
 def login():
@@ -20,7 +103,8 @@ def login():
             obj.login_date = datetime.datetime.now()
             obj.login_ip = request.remote_addr
             db.session.flush()
-            return Result.SUCCESS(data={"token": token})
+            userinfo = {"username": obj.username, "userrole": obj.userrole}
+            return Result.SUCCESS(data={"token": token, "userinfo": userinfo, "routes": routes_list}, msg="登录成功")
         else:
             return Result.ERROR(msg="账号或密码错误")
     else:
