@@ -58,21 +58,19 @@ const rules = reactive({
   password: [{ validator: checkpassword, trigger: "blur" }],
 });
 
-localStorage.removeItem("USER_INFO");
+// localStorage.removeItem("USER_INFO");
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
       // console.log(proxy);
-      console.log(formData);
+      // console.log(formData);
       login(formData)
         .then((res) => {
-          // token.$patch((state) => {
-          //   state.token = "Bearer " + res.data.token;
-          // });
-          // token.user.setUserInfo(res.data.userinfo);
           setUserInfo(res.data);
+          // localStorage.setItem("ROUTES", JSON.stringify(res.data.routes));
+
           if (res.code) {
             proxy.$message.success(res.msg);
           } else {

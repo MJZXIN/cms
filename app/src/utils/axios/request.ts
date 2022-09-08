@@ -9,7 +9,7 @@ import instance from "./axios";
  **/
 
 const axios = async ({ method, url, data, config }: any): Promise<any> => {
-  console.log("---", method);
+  // console.log("---", method);
   // method = method.tolowerCase();
   if (method == "post") {
     return instance.post(url, data, { ...config });

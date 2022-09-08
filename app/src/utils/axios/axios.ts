@@ -13,7 +13,7 @@ var instance = axios.create({
 
 instance.interceptors.request.use(
   (config: any) => {
-    const token = user.token;
+    const token = user.$state.token;
     console.log(token);
     token && (config.headers.Authorization = token);
     if (config.methods === "POST") {

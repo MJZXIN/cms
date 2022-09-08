@@ -5,7 +5,6 @@ api_py/venv
 api_py/.idea
 api_ja/gradle
 api_py/_pycache_
-api_py/venv
 api_py/utils/_pycache_
 api_py/views/_pycache_
 *.pyc

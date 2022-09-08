@@ -10,6 +10,8 @@ auth = Blueprint("auth", __name__)
 routes_list = [
     {
         "path": "/",
+        "name": "home",
+        "root": True,
         "meta": {
             "title": "首页",
             "icon": "",
@@ -19,50 +21,91 @@ routes_list = [
                 "USER"
             ]
         },
-        "component": "components/Layout/layout.vue",
+        "component": "../views/layout/layout.vue",
+        "children": [{
+            "path": "",
+            "name": "dashboard",
+            "root": False,
+            "meta": {
+                "title": "看板",
+                "icon": "",
+                "roles": [
+                    "ADMIN",
+                    "SYSTEM",
+                    "USER"
+                ]
+            },
+            "component": "../views/home/dashboard.vue",
+            "children": []
+        }]
+    },
+    {
+        "path": "/product",
+        "name": "product",
+        "root": True,
+        "meta": {
+            "title": "产品管理",
+            "icon": "",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "../views/layout/layout.vue",
         "children": [
             {
-                "path": "/",
-                "name": "dashboard",
+                "path": "",
+                "name": "产品管理",
+                "root": False,
                 "meta": {
-                    "title": "看板",
+                    "title": "产品管理",
                     "icon": "",
                     "roles": [
                         "ADMIN",
                         "SYSTEM",
                         "USER"
                     ]
-                }
+                },
+                "component": "../views/product/product.vue",
+                "children": []
+            },
+            {
+                "path": "cost",
+                "name": "成本管理",
+                "root": False,
+                "meta": {
+                    "title": "成本管理",
+                    "icon": "",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                    ]
+                },
+                "component": "../views/product/cost.vue",
+                "children": []
+            },
+            {
+                "path": "bom",
+                "name": "BOM管理",
+                "root": False,
+                "meta": {
+                    "title": "BOM管理",
+                    "icon": "",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                    ]
+                },
+                "component": "../views/product/bom.vue",
+                "children": []
             }
         ]
-    }, {
-        "path": "/login",
-        "meta": {
-            "title": "登录",
-            "icon": "",
-            "roles": [
-                "ADMIN",
-                "SYSTEM",
-                "USER"
-            ]
-        },
-        "component": "views/auth/login.vue",
-        "children": []
-    }, {
-        "path": "/register",
-        "meta": {
-            "title": "注册",
-            "icon": "",
-            "roles": [
-                "ADMIN",
-                "SYSTEM",
-                "USER"
-            ]
-        },
-        "component": "views/auth/register.vue",
-        "children": []
-    }, {
-        "path": "/404",
+    },
+    {
+        "path": "/:catchAll(.*)",
+        "name": "404",
+        "root": True,
         "meta": {
             "title": "404",
             "icon": "",
@@ -72,20 +115,7 @@ routes_list = [
                 "USER"
             ]
         },
-        "component": "views/error/404.vue",
-        "children": []
-    }, {
-        "path": "/*",
-        "meta": {
-            "title": "404",
-            "icon": "",
-            "roles": [
-                "ADMIN",
-                "SYSTEM",
-                "USER"
-            ]
-        },
-        "component": "views/error/404.vue",
+        "component": "../views/error/404.vue",
         "children": []
     }
 ]

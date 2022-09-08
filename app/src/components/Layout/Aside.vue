@@ -1,15 +1,16 @@
 <template>
   <div class="title">CMS</div>
   <el-menu
-    :default-active="this.$route.path"
+    :default-active="router.currentRoute.value.path"
     class="el-menu-vertical-demo"
     :collapse="false"
-    collapse-transition="true"
-    route="true"
+    :collapse-transition="true"
+    :route="true"
+    :unique-opened="true"
     @select="handleSelect"
   >
-    <template v-for="(i, index) in routes">
-      <el-menu-item v-if="i.children.length == 0" :index="i.path">
+    <template v-for="(i, index) in menuList">
+      <el-menu-item v-if="i.children.length == 0" :index="i.path || '/'">
         <el-icon><icon-menu /></el-icon>
         <template #title>{{ i.meta.title }}</template>
       </el-menu-item>
@@ -23,7 +24,7 @@
           <!-- <template #title><span>Group One</span></template> -->
           <el-menu-item :index="j.path"
             ><el-icon><Setting /></el-icon>
-            <span>{{ j.name }}</span></el-menu-item
+            <span>{{ j.meta.title }}</span></el-menu-item
           >
         </el-menu-item-group>
         <!-- <el-sub-menu index="1-4">
@@ -38,38 +39,33 @@
 <script setup>
 import { Menu as IconMenu, Setting } from "@element-plus/icons-vue";
 import router from "@/router";
-import { computeStyles } from "@popperjs/core";
+import { userStore } from "@/store/modules/user";
 
-const routes = [
-  {
-    path: "/",
-    component: "components/Layout/layout.vue",
-    meta: {
-      title: "首页",
-    },
-    children: [],
-  },
-  {
-    path: "/setting",
-    component: "components/Layout/layout.vue",
-    meta: {
-      title: "设置",
-    },
-    children: [
-      {
-        path: "/system",
-        name: "系统设置",
-        component: "views/home/dashboard.vue",
-      },
-      {
-        path: "/user",
-        name: "用户设置",
-        component: "views/home/dashboard.vue",
-      },
-    ],
-  },
-];
+const user = userStore();
 
+let menuList = JSON.parse(user.$state.routes);
+
+function filterMenu() {
+  let newList = [];
+  for (const i of menuList) {
+    if (i.name != "404") {
+      newList.push(i);
+    }
+    if (i.name == "home") {
+      i.path = i.children[0].path;
+      i.name = i.children[0].name;
+      i.meta.title = i.children[0].meta.title;
+      i.children = [];
+    }
+    for (const j of i.children) {
+      if (j.path.indexOf("/") != 0 && j.path != "") {
+        j.path = "/" + j.path;
+      }
+    }
+  }
+  return newList;
+}
+menuList = filterMenu();
 // const handleOpen = (key, keyPath) => {
 //   console.log(key, keyPath);
 // };
