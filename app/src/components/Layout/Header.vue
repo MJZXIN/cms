@@ -1,10 +1,24 @@
 <template>
-  <div class="title">Header</div>
+  <span style="display: inline-block"
+    ><button @click="changeCollapse" style="display: inline-block">切换</button>
+    <span class="title">Header</span></span
+  >
 </template>
 
 <script>
+import { appStore } from "store/modules/app";
+import { ref } from "vue";
+let menuState = ref("false");
+
 export default {
   name: "Header",
+  methods: {
+    changeCollapse() {
+      const app = appStore();
+      app.changeCollapse();
+      menuState = app.menuCollapse;
+    },
+  },
 };
 </script>
 

@@ -47,6 +47,13 @@ router.beforeEach((to, from, next) => {
   //   console.log("已登录, 请求被驳回, ", from.path);
   //   next("/" || from.path);
   // }
+  if (whiteList.includes(to.path) || user.token) {
+    // next();
+    // next({ ...to, replace: true });
+  } else {
+    next("/login");
+  }
+  // 刷新前
   if (registerRouteFresh && router.getRoutes().length < 4) {
     let item = [];
     try {
@@ -66,15 +73,9 @@ router.beforeEach((to, from, next) => {
       }
     }
     registerRouteFresh = false;
-  } else {
-    next();
-  }
-
-  if (whiteList.includes(to.path) || user.token) {
-    // next();
     next({ ...to, replace: true });
   } else {
-    next("/login");
+    next();
   }
 });
 

@@ -24,7 +24,6 @@ export function filterAsyncRoutes(routes) {
     }
     return true;
   });
-  console.log(async);
   return async;
 }
 

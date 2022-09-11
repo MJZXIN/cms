@@ -17,8 +17,10 @@
       />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm(formRef)">登录</el-button>
-      <el-button @click="goRegister">注册</el-button>
+      <el-button type="primary" @click="submitForm(formRef)" autoInsertSpace
+        >登录</el-button
+      >
+      <el-button @click="goRegister" autoInsertSpace>注册</el-button>
     </el-form-item>
   </el-form>
 </template>

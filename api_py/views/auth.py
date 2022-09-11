@@ -14,7 +14,7 @@ routes_list = [
         "root": True,
         "meta": {
             "title": "首页",
-            "icon": "",
+            "icon": "IconMenu",
             "roles": [
                 "ADMIN",
                 "SYSTEM",
@@ -28,7 +28,7 @@ routes_list = [
             "root": False,
             "meta": {
                 "title": "看板",
-                "icon": "",
+                "icon": "IconMenu",
                 "roles": [
                     "ADMIN",
                     "SYSTEM",
@@ -41,11 +41,11 @@ routes_list = [
     },
     {
         "path": "/product",
-        "name": "product",
+        "name": "产品管理",
         "root": True,
         "meta": {
             "title": "产品管理",
-            "icon": "",
+            "icon": "Setting",
             "roles": [
                 "ADMIN",
                 "SYSTEM",
@@ -60,7 +60,7 @@ routes_list = [
                 "root": False,
                 "meta": {
                     "title": "产品管理",
-                    "icon": "",
+                    "icon": "IconMenu",
                     "roles": [
                         "ADMIN",
                         "SYSTEM",
@@ -76,7 +76,7 @@ routes_list = [
                 "root": False,
                 "meta": {
                     "title": "成本管理",
-                    "icon": "",
+                    "icon": "IconMenu",
                     "roles": [
                         "ADMIN",
                         "SYSTEM",
@@ -91,7 +91,7 @@ routes_list = [
                 "root": False,
                 "meta": {
                     "title": "BOM管理",
-                    "icon": "",
+                    "icon": "IconMenu",
                     "roles": [
                         "ADMIN",
                         "SYSTEM",
@@ -103,12 +103,91 @@ routes_list = [
         ]
     },
     {
+        "path": "/setting",
+        "name": "系统设置",
+        "root": True,
+        "meta": {
+            "title": "系统配置",
+            "icon": "Setting",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "../views/layout/layout.vue",
+        "children": [
+            {
+                "path": "system",
+                "name": "系统设置",
+                "root": False,
+                "meta": {
+                    "title": "系统设置",
+                    "icon": "IconMenu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/setting/system.vue",
+                "children": []
+            },
+            {
+                "path": "user",
+                "name": "用户管理",
+                "root": False,
+                "meta": {
+                    "title": "用户管理",
+                    "icon": "IconMenu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                    ]
+                },
+                "component": "../views/setting/user.vue",
+                "children": []
+            }
+        ]
+    },
+    {
+        "path": "/about",
+        "name": "about",
+        "root": True,
+        "meta": {
+            "title": "关于",
+            "icon": "IconMenu",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "../views/layout/layout.vue",
+        "children": [{
+            "path": "",
+            "name": "关于",
+            "root": False,
+            "meta": {
+                "title": "关于",
+                "icon": "IconMenu",
+                "roles": [
+                    "ADMIN",
+                    "SYSTEM",
+                    "USER"
+                ]
+            },
+            "component": "../views/about/about.vue",
+            "children": []
+        }]
+    },
+    {
         "path": "/:catchAll(.*)",
         "name": "404",
         "root": True,
         "meta": {
             "title": "404",
-            "icon": "",
+            "icon": "IconMenu",
             "roles": [
                 "ADMIN",
                 "SYSTEM",
