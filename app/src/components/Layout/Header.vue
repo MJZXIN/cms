@@ -1,6 +1,8 @@
 <template>
   <span style="display: inline-block"
-    ><button @click="changeCollapse" style="display: inline-block">切换</button>
+    ><el-button @click="changeCollapse" style="display: inline-block"
+      >切换</el-button
+    >
     <span class="title">Header</span></span
   >
 </template>

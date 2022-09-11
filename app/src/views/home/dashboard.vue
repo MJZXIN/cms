@@ -1,12 +1,12 @@
 <template>
   <div><h1>看板界面</h1></div>
   <div>
-    <button @click="req()">请求</button>
+    <el-button @click="req()" autoInsertSpace>请求</el-button>
     <div>{{ Token }}</div>
   </div>
-  <div><button @click="Info">userInfo</button></div>
+  <div><el-button @click="Info" autoInsertSpace>用户信息</el-button></div>
   <div>{{ userInfo }}</div>
-  <div><button @click="route">routes</button></div>
+  <div><el-button @click="route">路由</el-button></div>
   <div>{{ Routes }}</div>
 </template>
 
