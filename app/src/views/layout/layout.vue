@@ -1,16 +1,11 @@
 <template>
-  <div class="common-layout">
+  <div>
     <el-container>
-      <el-aside :width="isCollapse ? '64px' : '200px'"
-        ><Aside></Aside
-      ></el-aside>
+      <el-aside :style="{ width: menuWidth }">
+        <Aside></Aside>
+      </el-aside>
       <el-container>
         <el-header><Header></Header></el-header>
-        <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: '/' }">主页</el-breadcrumb-item>
-          <!-- <el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item> -->
-          <el-breadcrumb-item>首页</el-breadcrumb-item>
-        </el-breadcrumb>
         <el-main>
           <router-view />
         </el-main>
@@ -22,38 +17,53 @@
 <script>
 import Aside from "components/Layout/Aside.vue";
 import Header from "components/Layout/Header.vue";
+import Bread from "components/Layout/Bread.vue";
 import { appStore } from "@/store/modules/app";
 import { ref } from "vue";
-
-let menuWidth = ref(localStorage.getItem("Collapse") || "200px");
 
 export default {
   name: "layout",
   data() {
     return {
-      isCollapse: false,
+      menuWidth: "200px",
     };
   },
   components: {
     Aside,
     Header,
+    Bread,
   },
   created() {
+    // const app = appStore();
+    // this.menuWidth = app.menuCollapse ? "64px" : "200px";
+    // console.log(this.menuWidth);
     const app = appStore();
-    // if (app.menuCollapse) {
-    //   menuWidth = "200px";
-    // } else {
-    //   menuWidth = "64px";
-    // }
-    this.isCollapse = app.menuCollapse;
-    localStorage.setItem("Collapse", menuWidth);
+    // let menuWidth = ref("200px");
+    this.menuWidth = app.menuCollapse ? "auto" : "200px";
+    const subscribe = app.$subscribe(
+      (mutation, state) => {
+        this.menuWidth = app.menuCollapse ? "auto" : "200px";
+      },
+      {
+        detached: false,
+      }
+    );
   },
-  computed: {
-    stylelVar() {
-      return {
-        "--collapse-width": "64px",
-      };
-    },
+  setup() {
+    // const app = appStore();
+    // let menuWidth = ref("200px");
+    // let isCollapse = false;
+    // const subscribe = app.$subscribe(
+    //   (mutation, state) => {
+    //     this.menuWidth = app.menuCollapse ? "64px" : "200px";
+    //     isCollapse = app.menuCollapse;
+    //     console.log(isCollapse, menuWidth);
+    //   },
+    //   {
+    //     detached: false,
+    //   }
+    // );
+    // return { isCollapse };
   },
 };
 </script>

@@ -14,7 +14,7 @@ routes_list = [
         "root": True,
         "meta": {
             "title": "首页",
-            "icon": "IconMenu",
+            "icon": "Monitor",
             "roles": [
                 "ADMIN",
                 "SYSTEM",
@@ -24,11 +24,11 @@ routes_list = [
         "component": "../views/layout/layout.vue",
         "children": [{
             "path": "",
-            "name": "dashboard",
+            "name": "overview",
             "root": False,
             "meta": {
                 "title": "看板",
-                "icon": "IconMenu",
+                "icon": "Monitor",
                 "roles": [
                     "ADMIN",
                     "SYSTEM",
@@ -40,12 +40,155 @@ routes_list = [
         }]
     },
     {
+        "path": "/system",
+        "name": "系统管理",
+        "root": True,
+        "meta": {
+            "title": "系统管理",
+            "icon": "Setting",
+            "roles": [
+                "ADMIN",
+                "SYSTEM",
+                "USER"
+            ]
+        },
+        "component": "../views/layout/layout.vue",
+        "children": [
+            {
+                "path": "user",
+                "name": "用户设置",
+                "root": False,
+                "meta": {
+                    "title": "用户管理",
+                    "icon": "Memo",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/system/user.vue",
+                "children": []
+            },
+            {
+                "path": "role",
+                "name": "角色设置",
+                "root": False,
+                "meta": {
+                    "title": "角色管理",
+                    "icon": "Memo",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/system/role.vue",
+                "children": []
+            },
+            {
+                "path": "menu",
+                "name": "菜单管理",
+                "root": False,
+                "meta": {
+                    "title": "菜单管理",
+                    "icon": "Menu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/system/menu.vue",
+                "children": []
+            },
+            {
+                "path": "dept",
+                "name": "部门管理",
+                "root": False,
+                "meta": {
+                    "title": "部门管理",
+                    "icon": "Menu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/system/dept.vue",
+                "children": []
+            }, {
+                "path": "post",
+                "name": "岗位管理",
+                "root": False,
+                "meta": {
+                    "title": "岗位管理",
+                    "icon": "Menu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/system/post.vue",
+                "children": []
+            }, {
+                "path": "dict",
+                "name": "字典管理",
+                "root": False,
+                "meta": {
+                    "title": "字典管理",
+                    "icon": "Menu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/system/dict.vue",
+                "children": []
+            },
+            {
+                "path": "config",
+                "name": "参数设置",
+                "root": False,
+                "meta": {
+                    "title": "参数设置",
+                    "icon": "Menu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/system/config.vue",
+                "children": []
+            },
+            {
+                "path": "setting",
+                "name": "系统设置",
+                "root": False,
+                "meta": {
+                    "title": "系统设置",
+                    "icon": "Memo",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/setting/system.vue",
+                "children": []
+            }
+        ]
+    },
+    {
         "path": "/product",
         "name": "产品管理",
         "root": True,
         "meta": {
             "title": "产品管理",
-            "icon": "Setting",
+            "icon": "SetUp",
             "roles": [
                 "ADMIN",
                 "SYSTEM",
@@ -60,7 +203,7 @@ routes_list = [
                 "root": False,
                 "meta": {
                     "title": "产品管理",
-                    "icon": "IconMenu",
+                    "icon": "SetUp",
                     "roles": [
                         "ADMIN",
                         "SYSTEM",
@@ -76,7 +219,7 @@ routes_list = [
                 "root": False,
                 "meta": {
                     "title": "成本管理",
-                    "icon": "IconMenu",
+                    "icon": "Notebook",
                     "roles": [
                         "ADMIN",
                         "SYSTEM",
@@ -91,7 +234,7 @@ routes_list = [
                 "root": False,
                 "meta": {
                     "title": "BOM管理",
-                    "icon": "IconMenu",
+                    "icon": "Guide",
                     "roles": [
                         "ADMIN",
                         "SYSTEM",
@@ -103,60 +246,12 @@ routes_list = [
         ]
     },
     {
-        "path": "/setting",
-        "name": "系统设置",
-        "root": True,
-        "meta": {
-            "title": "系统配置",
-            "icon": "Setting",
-            "roles": [
-                "ADMIN",
-                "SYSTEM",
-                "USER"
-            ]
-        },
-        "component": "../views/layout/layout.vue",
-        "children": [
-            {
-                "path": "system",
-                "name": "系统设置",
-                "root": False,
-                "meta": {
-                    "title": "系统设置",
-                    "icon": "IconMenu",
-                    "roles": [
-                        "ADMIN",
-                        "SYSTEM",
-                        "USER"
-                    ]
-                },
-                "component": "../views/setting/system.vue",
-                "children": []
-            },
-            {
-                "path": "user",
-                "name": "用户管理",
-                "root": False,
-                "meta": {
-                    "title": "用户管理",
-                    "icon": "IconMenu",
-                    "roles": [
-                        "ADMIN",
-                        "SYSTEM",
-                    ]
-                },
-                "component": "../views/setting/user.vue",
-                "children": []
-            }
-        ]
-    },
-    {
         "path": "/about",
         "name": "about",
         "root": True,
         "meta": {
             "title": "关于",
-            "icon": "IconMenu",
+            "icon": "Help",
             "roles": [
                 "ADMIN",
                 "SYSTEM",
@@ -170,7 +265,7 @@ routes_list = [
             "root": False,
             "meta": {
                 "title": "关于",
-                "icon": "IconMenu",
+                "icon": "Help",
                 "roles": [
                     "ADMIN",
                     "SYSTEM",
@@ -245,3 +340,8 @@ def getInfo():
         "username": payload.get("username"),
         "userrole": payload.get("userrole")
     }, msg="已登录")
+
+
+@auth.route("/logout")
+def logout():
+    return Result.SUCCESS(msg="退出登录")

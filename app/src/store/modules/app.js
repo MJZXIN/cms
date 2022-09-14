@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const appStore = defineStore("app", {
+export const appStore = defineStore("APP_INFO", {
   state: () => {
     return {
       menuCollapse: false,
@@ -11,5 +11,13 @@ export const appStore = defineStore("app", {
       this.menuCollapse = !this.menuCollapse;
     },
   },
-  getters: {},
+  getters: {
+    getCollapse() {
+      return state.menuCollapse;
+    },
+  },
+  persist: {
+    enabled: true,
+    storage: sessionStorage,
+  },
 });

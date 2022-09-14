@@ -24,7 +24,7 @@
         autocomplete="off"
       />
     </el-form-item>
-    <el-form-item>
+    <el-form-item style="display: flex">
       <el-button type="primary" @click="submitForm(ruleFormRef)"
         >注册</el-button
       >
@@ -117,3 +117,12 @@ const goLogin = () => {
   router.push("/login");
 };
 </script>
+
+<style scoped>
+.demo-ruleForm {
+  display: block;
+  width: 300px;
+  margin: auto;
+  margin-top: calc(50vh - 60px);
+}
+</style>

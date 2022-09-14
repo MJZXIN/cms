@@ -1,7 +1,7 @@
 <template>
   <div><h1>看板界面</h1></div>
   <div>
-    <el-button @click="req()" autoInsertSpace>请求</el-button>
+    <el-button @click="req()" autoInsertSpace>Token</el-button>
     <div>{{ Token }}</div>
   </div>
   <div><el-button @click="Info" autoInsertSpace>用户信息</el-button></div>

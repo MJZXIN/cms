@@ -76,6 +76,17 @@ button:focus-visible {
   text-align: center;
 } */
 
+.el-main {
+  /* height: calc(100vh - 70px); */
+  /* width: calc(100vw - 201px); */
+  /* display: flex; */
+  background-color: rgb(236, 245, 255);
+}
+
+.el-header {
+  /* display: flex; */
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

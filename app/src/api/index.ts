@@ -16,24 +16,12 @@ const register = (data: any) => {
   });
 };
 
-const getMenu = () => {
+const logout = (data: any) => {
   return axios({
     method: "get",
-    url: "/menu",
-  });
-};
-
-const getUser = (data: any) => {
-  return axios({
-    url: "/getUser",
+    url: "/logout",
     data,
-    config: {
-      headers: {
-        Request: "phone",
-      },
-      timeout: 3000,
-    },
   });
 };
 
-export { login, getUser, register, getMenu };
+export { login, register, logout };

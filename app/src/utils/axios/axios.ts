@@ -1,7 +1,6 @@
 import axios from "axios";
 import { errorCodeType } from "./error-code-type";
 import { userStore } from "store/modules/user";
-const user = userStore();
 
 var instance = axios.create({
   timeout: 3500,
@@ -13,6 +12,7 @@ var instance = axios.create({
 
 instance.interceptors.request.use(
   (config: any) => {
+    const user = userStore();
     const token = user.$state.token;
     console.log(token);
     token && (config.headers.Authorization = token);

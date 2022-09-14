@@ -3,26 +3,26 @@
   <el-menu
     :default-active="this.$route.path"
     :collapse="app.menuCollapse"
-    :collapse-transition="true"
+    :collapse-transition="false"
     :route="true"
     :unique-opened="true"
     @select="handleSelect"
   >
     <template v-for="(i, index) in menuList">
       <el-menu-item v-if="i.children.length == 0" :index="i.path">
-        <el-icon><component color="#FFF" :is="i.meta.icon" /></el-icon>
+        <el-icon><component color="#111" :is="i.meta.icon" /></el-icon>
         <template #title>{{ i.meta.title }}</template>
       </el-menu-item>
 
       <el-sub-menu v-else :index="i.path || '/'">
         <template #title>
-          <el-icon><component color="#FFF" :is="i.meta.icon" /></el-icon>
+          <el-icon><component color="#111" :is="i.meta.icon" /></el-icon>
           <span>{{ i.name }}</span>
         </template>
 
         <el-menu-item-group v-for="j in i.children">
-          <el-menu-item :index="i.path + j.path"
-            ><component color="#FFF" :is="j.meta.icon" />
+          <el-menu-item :index="i.path + j.path">
+            <el-icon><component color="#111" :is="j.meta.icon" /></el-icon>
             <span>{{ j.meta.title }}</span></el-menu-item
           >
         </el-menu-item-group>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { Menu as IconMenu, Setting } from "@element-plus/icons-vue";
+// import { Menu as IconMenu, Setting } from "@element-plus/icons-vue";
 import router from "@/router";
 import { userStore } from "@/store/modules/user";
 import { appStore } from "store/modules/app";
