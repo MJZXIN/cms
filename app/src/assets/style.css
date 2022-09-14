@@ -4,9 +4,21 @@
     box-sizing: border-box;
 } */
 
-.el-main {
-    background-color: rgb(236, 245, 255);
+/* #app {
+    width: 100vw;
+    height: 100vh;
+} */
+
+#app {
+    text-align: center;
 }
+
+
+
+.el-menu-item-group__title {
+    display: none;
+}
+
 
 /* 模糊 */
 .allblur {
