@@ -9,3 +9,4 @@ api_py/_pycache_
 api_py/utils/_pycache_
 api_py/views/_pycache_
 *.pyc
+node_modules
