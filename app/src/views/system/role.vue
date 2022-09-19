@@ -14,8 +14,8 @@
     :data="tableData"
     style="width: 100%"
   >
-    <el-table-column prop="uid" label="产品编号" width="80" />
-    <el-table-column prop="name" label="产品名称" width="160" />
+    <el-table-column prop="uid" label="角色编号" width="80" />
+    <el-table-column prop="rolename" label="角色名称" width="160" />
     <el-table-column prop="rolecode" label="权限字符" width="160" />
     <el-table-column label="状态" width="60">
       <template #default="scope">

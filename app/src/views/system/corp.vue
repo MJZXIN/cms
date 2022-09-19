@@ -6,24 +6,17 @@
     <el-button type="warning">Warning</el-button>
     <el-button type="danger">Danger</el-button>
   </div>
-  <el-table
-    v-loading="loading"
-    row-key="uid"
-    lazy
-    :load="load"
-    :data="tableData"
-    style="width: 100%"
-  >
-    <el-table-column prop="uid" label="产品编号" width="80" />
-    <el-table-column prop="name" label="产品名称" width="160" />
-    <el-table-column prop="rolecode" label="权限字符" width="160" />
+  <el-table v-loading="loading" :data="tableData" style="width: 100%">
+    <el-table-column prop="uid" label="编号" width="60" />
+    <el-table-column prop="corpname" label="公司名称" width="160" />
     <el-table-column label="状态" width="60">
       <template #default="scope">
         <el-tag v-if="scope.status">禁用</el-tag>
         <el-tag v-else>正常</el-tag>
       </template>
     </el-table-column>
-    <el-table-column prop="create_by" label="创建者" width="120" />
+    <el-table-column prop="city" label="城市" width="120" />
+    <el-table-column prop="address" label="地址" width="300" />
     <el-table-column fixed="right" label="操作">
       <template #default>
         <el-button link type="primary" size="small" @click="handleClick"
@@ -46,17 +39,19 @@
 
   <el-dialog
     v-model="dialogVisible"
-    title="新建岗位"
+    title="新建公司"
     width="60%"
     :before-close="handleClose"
   >
     <el-form :model="form">
-      <el-form-item label="角色名称">
-        <el-input v-model="formData.rolename" /> </el-form-item
-      ><el-form-item label="权限字符">
-        <el-input v-model="formData.rolecode" />
+      <el-form-item label="公司名称">
+        <el-input v-model="formData.corpname" />
       </el-form-item>
-      <el-form-item label="状态">
+      <el-form-item label="城市">
+        <el-input v-model="formData.city" /> </el-form-item
+      ><el-form-item label="地址">
+        <el-input v-model="formData.address" /> </el-form-item
+      ><el-form-item label="公司状态">
         <el-radio-group v-model="formData.status">
           <el-radio label="1">正常</el-radio>
           <el-radio label="0">停用</el-radio>
@@ -73,7 +68,7 @@
 </template>
 
 <script>
-import { getRole, addRole } from "api/system";
+import { getCorp, addCorp } from "api/system";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -84,8 +79,9 @@ export default {
       loading: false,
       dialogVisible: false,
       formData: {
-        rolename: "",
-        rolecode: "",
+        corpname: "",
+        city: "",
+        address: "",
         status: "1",
       },
     };
@@ -93,7 +89,7 @@ export default {
   methods: {
     handleCurrentChange(page) {
       this.loading = true;
-      getRole(page)
+      getCorp(page)
         .then((res) => {
           this.tableData = res.data.data_list;
           this.total_page = res.data.total_page;
@@ -104,7 +100,7 @@ export default {
         });
     },
     handleAdd() {
-      addRole(this.formData)
+      addCorp(this.formData)
         .then((res) => {
           ElMessage(res.msg);
           this.dialogVisible = false;
@@ -118,7 +114,16 @@ export default {
     },
   },
   created() {
-    this.handleCurrentChange(1);
+    this.loading = true;
+    getCorp(1)
+      .then((res) => {
+        this.tableData = res.data.data_list;
+        this.total_page = res.data.total_page;
+        this.loading = false;
+      })
+      .catch(() => {
+        this.loading = false;
+      });
   },
 };
 </script>

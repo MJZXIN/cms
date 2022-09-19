@@ -12,11 +12,10 @@
     lazy
     :load="load"
     :data="tableData"
+    :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     style="width: 100%"
   >
-    <el-table-column prop="uid" label="产品编号" width="80" />
-    <el-table-column prop="name" label="产品名称" width="160" />
-    <el-table-column prop="rolecode" label="权限字符" width="160" />
+    <el-table-column prop="name" label="部门名称" width="160" />
     <el-table-column label="状态" width="60">
       <template #default="scope">
         <el-tag v-if="scope.status">禁用</el-tag>
@@ -24,6 +23,7 @@
       </template>
     </el-table-column>
     <el-table-column prop="create_by" label="创建者" width="120" />
+    <el-table-column prop="address" label="地址" width="300" />
     <el-table-column fixed="right" label="操作">
       <template #default>
         <el-button link type="primary" size="small" @click="handleClick"
@@ -46,17 +46,29 @@
 
   <el-dialog
     v-model="dialogVisible"
-    title="新建岗位"
+    title="新建部门"
     width="60%"
     :before-close="handleClose"
   >
     <el-form :model="form">
-      <el-form-item label="角色名称">
-        <el-input v-model="formData.rolename" /> </el-form-item
-      ><el-form-item label="权限字符">
-        <el-input v-model="formData.rolecode" />
+      <el-form-item label="所属公司">
+        <el-select
+          v-model="formData.corpname"
+          filterable
+          placeholder="所属公司"
+        >
+          <el-option
+            v-for="item in corpList"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="状态">
+      <el-form-item label="部门名称">
+        <el-input v-model="formData.deptname" />
+      </el-form-item>
+      <el-form-item label="部门状态">
         <el-radio-group v-model="formData.status">
           <el-radio label="1">正常</el-radio>
           <el-radio label="0">停用</el-radio>
@@ -73,7 +85,7 @@
 </template>
 
 <script>
-import { getRole, addRole } from "api/system";
+import { getDept, addDept, getDeptByCorp, getCorpList } from "api/system";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -83,20 +95,34 @@ export default {
       total_page: 1,
       loading: false,
       dialogVisible: false,
+      corpList: [],
       formData: {
-        rolename: "",
-        rolecode: "",
+        corpname: "",
+        deptname: "",
         status: "1",
       },
     };
   },
   methods: {
+    load(row, treeNode, resolve) {
+      getDeptByCorp(row.name)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch(() => {
+          ElMessage({
+            message: "网络异常",
+            type: "warning",
+          });
+        });
+    },
     handleCurrentChange(page) {
       this.loading = true;
-      getRole(page)
+      getDept(page)
         .then((res) => {
           this.tableData = res.data.data_list;
           this.total_page = res.data.total_page;
+          this.corpList = res.data.corp_list;
           this.loading = false;
         })
         .catch(() => {
@@ -104,7 +130,7 @@ export default {
         });
     },
     handleAdd() {
-      addRole(this.formData)
+      addDept(this.formData)
         .then((res) => {
           ElMessage(res.msg);
           this.dialogVisible = false;

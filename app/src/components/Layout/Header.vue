@@ -21,7 +21,8 @@
             <el-dropdown-item>Action 2</el-dropdown-item>
             <el-dropdown-item>Action 3</el-dropdown-item>
             <el-dropdown-item>Action 4</el-dropdown-item>
-            <el-dropdown-item @click="user_logout">退出</el-dropdown-item>
+            <el-divider style="margin: 5px 0" />
+            <el-dropdown-item @click="user_logout">退 出</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

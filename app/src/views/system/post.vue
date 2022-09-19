@@ -14,9 +14,9 @@
     :data="tableData"
     style="width: 100%"
   >
-    <el-table-column prop="uid" label="产品编号" width="80" />
-    <el-table-column prop="name" label="产品名称" width="160" />
-    <el-table-column prop="rolecode" label="权限字符" width="160" />
+    <el-table-column prop="uid" label="岗位编号" width="80" />
+    <el-table-column prop="postcode" label="岗位编码" width="100" />
+    <el-table-column prop="postname" label="岗位名称" width="160" />
     <el-table-column label="状态" width="60">
       <template #default="scope">
         <el-tag v-if="scope.status">禁用</el-tag>
@@ -51,12 +51,12 @@
     :before-close="handleClose"
   >
     <el-form :model="form">
-      <el-form-item label="角色名称">
-        <el-input v-model="formData.rolename" /> </el-form-item
-      ><el-form-item label="权限字符">
-        <el-input v-model="formData.rolecode" />
+      <el-form-item label="岗位名称">
+        <el-input v-model="formData.postname" /> </el-form-item
+      ><el-form-item label="岗位编码">
+        <el-input v-model="formData.postcode" />
       </el-form-item>
-      <el-form-item label="状态">
+      <el-form-item label="岗位状态">
         <el-radio-group v-model="formData.status">
           <el-radio label="1">正常</el-radio>
           <el-radio label="0">停用</el-radio>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { getRole, addRole } from "api/system";
+import { getPost, addPost } from "api/system";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -84,8 +84,8 @@ export default {
       loading: false,
       dialogVisible: false,
       formData: {
-        rolename: "",
-        rolecode: "",
+        postname: "",
+        postcode: "",
         status: "1",
       },
     };
@@ -93,7 +93,7 @@ export default {
   methods: {
     handleCurrentChange(page) {
       this.loading = true;
-      getRole(page)
+      getPost(page)
         .then((res) => {
           this.tableData = res.data.data_list;
           this.total_page = res.data.total_page;
@@ -104,7 +104,7 @@ export default {
         });
     },
     handleAdd() {
-      addRole(this.formData)
+      addPost(this.formData)
         .then((res) => {
           ElMessage(res.msg);
           this.dialogVisible = false;

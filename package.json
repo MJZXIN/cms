@@ -1,0 +1,20 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "content management system",
+  "main": "index.js",
+  "repository": "git@github.com:MJZXIN/cms.git",
+  "author": "mxx <mjzxin@outlookcom>",
+  "license": "MIT",
+  "devDependencies": {
+    "cz-git": "^1.3.11"
+  },
+  "script": {
+    "commit": "git cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  }
+}

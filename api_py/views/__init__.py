@@ -1,3 +1,4 @@
 from views.auth import auth
 from views.user import user
-from views.menu import menu
+from views.system import system
+from views.product import product

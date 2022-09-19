@@ -11,7 +11,7 @@ export const userStore = defineStore("USER_INFO", {
   persist: {
     enabled: true,
     // key: ["token"],
-    encryptionKey: "xxPqNwkq32Hfm6A9ZM8WFSCZLBX8",
+    // encryptionKey: "xxPqNwkq32Hfm6A9ZM8WFSCZLBX8",
     storage: localStorage,
   },
 });

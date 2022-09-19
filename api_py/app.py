@@ -1,18 +1,22 @@
+import functools
+
 import jwt
-from flask import Flask, current_app, request
+from flask import Flask, current_app, request, g
 from flask_cors import CORS
 import pymysql
 from jwt import exceptions
 
 import config
 from views import *
-from utils import Result, JwtImpl, SALT, db
+from utils import Result, JwtImpl, SALT, db, has_role
 
 
 app = Flask(__name__)
+
 app.register_blueprint(auth, url_prefix="/api")
 app.register_blueprint(user, url_prefix="/api/user")
-app.register_blueprint(menu, url_prefix="/api")
+app.register_blueprint(system, url_prefix="/api/system")
+app.register_blueprint(product, url_prefix="/api/product")
 
 app.config.from_object(config)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://Festo:Festo4.0@127.0.0.1:3306/cms_db'
@@ -69,6 +73,8 @@ def jwt_authentication():
             try:
                 "判断token的校验结果"
                 payload = jwt.decode(token, SALT, algorithms=['HS256'])
+                g.userinfo = payload
+                print(payload)
             except exceptions.ExpiredSignatureError:  # 'token已失效'
                 return Result.ERROR(code=403, msg='token已失效')
             except jwt.DecodeError:  # 'token认证失败'
@@ -77,6 +83,7 @@ def jwt_authentication():
                 return Result.ERROR(code=403, msg='非法的token')
         else:
             return Result.ERROR(code=403, msg='无身份信息')
+
 
 
 @app.route('/api')

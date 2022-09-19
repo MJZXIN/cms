@@ -14,16 +14,18 @@
     :data="tableData"
     style="width: 100%"
   >
-    <el-table-column prop="uid" label="产品编号" width="80" />
-    <el-table-column prop="name" label="产品名称" width="160" />
-    <el-table-column prop="rolecode" label="权限字符" width="160" />
+    <el-table-column prop="uid" label="用户编号" width="80" />
+    <el-table-column prop="username" label="角色名称" width="160" />
+    <el-table-column prop="nick_name" label="用户昵称" width="160" />
+    <el-table-column prop="deptname" label="部门" width="160" />
+    <el-table-column prop="phone" label="手机号码" width="160" />
     <el-table-column label="状态" width="60">
       <template #default="scope">
         <el-tag v-if="scope.status">禁用</el-tag>
         <el-tag v-else>正常</el-tag>
       </template>
     </el-table-column>
-    <el-table-column prop="create_by" label="创建者" width="120" />
+    <el-table-column prop="date" label="创建时间" width="240" />
     <el-table-column fixed="right" label="操作">
       <template #default>
         <el-button link type="primary" size="small" @click="handleClick"
@@ -52,15 +54,60 @@
   >
     <el-form :model="form">
       <el-form-item label="角色名称">
-        <el-input v-model="formData.rolename" /> </el-form-item
-      ><el-form-item label="权限字符">
-        <el-input v-model="formData.rolecode" />
+        <el-input v-model="formData.username" />
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-input
+          type="password"
+          show-password
+          v-model="formData.password"
+        /> </el-form-item
+      ><el-form-item label="昵称">
+        <el-input v-model="formData.nick_name" />
+      </el-form-item>
+      <el-form-item label="手机号">
+        <el-input v-model="formData.phone" />
+      </el-form-item>
+      <el-form-item label="邮箱">
+        <el-input v-model="formData.email" />
+      </el-form-item>
+      <el-form-item label="部门">
+        <el-cascader
+          v-model="formData.deptname"
+          :options="deptList"
+          :show-all-levels="false"
+        />
+      </el-form-item>
+      <el-form-item label="角色">
+        <el-select
+          v-model="formData.rolename"
+          multiple
+          filterable
+          placeholder="Select"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="item in roleList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="状态">
         <el-radio-group v-model="formData.status">
           <el-radio label="1">正常</el-radio>
           <el-radio label="0">停用</el-radio>
         </el-radio-group>
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input
+          v-model="formData.remark"
+          :autosize="{ minRows: 2, maxRows: 4 }"
+          show-word-limit
+          type="textarea"
+          placeholder="Please input"
+        />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -73,7 +120,7 @@
 </template>
 
 <script>
-import { getRole, addRole } from "api/system";
+import { getUser, addUser } from "api/system";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -83,9 +130,15 @@ export default {
       total_page: 1,
       loading: false,
       dialogVisible: false,
+      deptList: [],
+      roleList: [],
       formData: {
+        username: "",
+        password: "",
+        deptname: "",
         rolename: "",
-        rolecode: "",
+        email: "",
+        phone: null,
         status: "1",
       },
     };
@@ -93,10 +146,12 @@ export default {
   methods: {
     handleCurrentChange(page) {
       this.loading = true;
-      getRole(page)
+      getUser(page)
         .then((res) => {
           this.tableData = res.data.data_list;
           this.total_page = res.data.total_page;
+          this.deptList = res.data.dept_list;
+          this.roleList = res.data.role_list;
           this.loading = false;
         })
         .catch(() => {
@@ -104,7 +159,7 @@ export default {
         });
     },
     handleAdd() {
-      addRole(this.formData)
+      addUser(this.formData)
         .then((res) => {
           ElMessage(res.msg);
           this.dialogVisible = false;

@@ -12,7 +12,7 @@ export async function setUserInfo(info) {
 
   // const deepCopy = JSON.parse(JSON.stringify(info.routes));
   const deepCopy = info.routes;
-  const accessedRouters = filterAsyncRouter(deepCopy, info.userinfo.userrole);
+  const accessedRouters = filterAsyncRouter(deepCopy, info.userinfo.rolename);
   //   localStorage.setItem(ROUTERS_KEY, JSON.stringify(accessedRouters));
   store.$patch((state) => {
     state.token = "Bearer " + info.token;
