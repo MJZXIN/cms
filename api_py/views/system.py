@@ -104,6 +104,8 @@ def getCorpForDept(page):
             "hasChildren": True,
             "children": []
         })
+    temp = TblCorp.query.filter().order_by(TblCorp.corpname).all()
+    for i in temp:
         res["corp_list"].append(i.corpname)
 
     res["total_page"] = pagination.pages

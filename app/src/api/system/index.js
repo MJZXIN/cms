@@ -1,4 +1,5 @@
 import { axios } from "utils/axios/request";
+import { getUser, addUser } from "./User";
 
 const getCorp = (page) => {
   return axios({
@@ -70,21 +71,6 @@ const addRole = (form) => {
   return axios({
     method: "post",
     url: "/system/role",
-    data: form,
-  });
-};
-
-const getUser = (page) => {
-  return axios({
-    method: "get",
-    url: "/system/user/" + page,
-  });
-};
-
-const addUser = (form) => {
-  return axios({
-    method: "post",
-    url: "/system/user",
     data: form,
   });
 };

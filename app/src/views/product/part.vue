@@ -14,9 +14,12 @@
     :data="tableData"
     style="width: 100%"
   >
-    <el-table-column prop="uid" label="产品编号" width="80" />
-    <el-table-column prop="name" label="产品名称" width="160" />
-    <el-table-column prop="rolecode" label="权限字符" width="160" />
+    <el-table-column prop="uid" label="零件编号" width="80" />
+    <el-table-column prop="partname" label="零件名称" width="160" />
+    <el-table-column prop="part_spec" label="零件规格" width="160" />
+    <el-table-column prop="part_type" label="零件类型" width="80" />
+    <el-table-column prop="whshname" label="零件位置" width="80" />
+    <el-table-column prop="part_cost" label="零件价格" width="80" />
     <el-table-column label="状态" width="60">
       <template #default="scope">
         <el-tag v-if="scope.status">禁用</el-tag>
@@ -46,15 +49,34 @@
 
   <el-dialog
     v-model="dialogVisible"
-    title="新建岗位"
+    title="新建零件"
     width="60%"
     :before-close="handleClose"
   >
     <el-form :model="form">
-      <el-form-item label="角色名称">
-        <el-input v-model="formData.rolename" /> </el-form-item
-      ><el-form-item label="权限字符">
-        <el-input v-model="formData.rolecode" />
+      <el-form-item label="零件名称">
+        <el-input v-model="formData.partname" /> </el-form-item
+      ><el-form-item label="零件规格">
+        <el-input v-model="formData.part_spec" />
+      </el-form-item>
+      <el-form-item label="零件类型">
+        <el-radio-group v-model="formData.part_type">
+          <el-radio label="原材料" size="large">原材料</el-radio>
+          <el-radio label="半成品" size="large">半成品</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="零件位置">
+        <el-cascader
+          v-model="formData.whshname"
+          :options="whshList"
+          :show-all-levels="true"
+        />
+      </el-form-item>
+      <el-form-item label="零件数量">
+        <el-input type="number" min="0" v-model="formData.total_number" />
+      </el-form-item>
+      <el-form-item label="零件价格">
+        <el-input type="number" min="0" v-model="formData.part_cost" />
       </el-form-item>
       <el-form-item label="状态">
         <el-radio-group v-model="formData.status">
@@ -73,7 +95,7 @@
 </template>
 
 <script>
-import { getRole, addRole } from "api/system";
+import { getPart, addPart } from "api/product";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -83,9 +105,14 @@ export default {
       total_page: 1,
       loading: false,
       dialogVisible: false,
+      whshList: [],
       formData: {
-        rolename: "",
-        rolecode: "",
+        partname: "",
+        part_spec: "",
+        part_type: "原材料",
+        whshname: "",
+        total_number: 0,
+        part_cost: 0.0,
         status: "1",
       },
     };
@@ -93,10 +120,11 @@ export default {
   methods: {
     handleCurrentChange(page) {
       this.loading = true;
-      getRole(page)
+      getPart(page)
         .then((res) => {
           this.tableData = res.data.data_list;
           this.total_page = res.data.total_page;
+          this.whshList = res.data.whsh_list;
           this.loading = false;
         })
         .catch(() => {
@@ -104,7 +132,7 @@ export default {
         });
     },
     handleAdd() {
-      addRole(this.formData)
+      addPart(this.formData)
         .then((res) => {
           ElMessage(res.msg);
           this.dialogVisible = false;

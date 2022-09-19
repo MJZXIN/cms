@@ -16,6 +16,7 @@ app = Flask(__name__)
 app.register_blueprint(auth, url_prefix="/api")
 app.register_blueprint(user, url_prefix="/api/user")
 app.register_blueprint(system, url_prefix="/api/system")
+app.register_blueprint(product, url_prefix="/api/product")
 
 app.config.from_object(config)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://Festo:Festo4.0@127.0.0.1:3306/cms_db'

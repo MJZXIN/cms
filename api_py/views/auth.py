@@ -224,6 +224,22 @@ routes_list = [
                 "children": []
             },
             {
+                "path": "part",
+                "name": "零件管理",
+                "root": False,
+                "meta": {
+                    "title": "零件管理",
+                    "icon": "SetUp",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                        "USER"
+                    ]
+                },
+                "component": "../views/product/part.vue",
+                "children": []
+            },
+            {
                 "path": "cost",
                 "name": "成本管理",
                 "root": False,
@@ -251,6 +267,21 @@ routes_list = [
                     ]
                 },
                 "component": "../views/product/bom.vue",
+                "children": []
+            },
+            {
+                "path": "warehouse",
+                "name": "仓库管理",
+                "root": False,
+                "meta": {
+                    "title": "仓库管理",
+                    "icon": "Guide",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM",
+                    ]
+                },
+                "component": "../views/product/warehouse.vue",
                 "children": []
             }
         ]
