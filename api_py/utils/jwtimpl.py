@@ -22,7 +22,7 @@ class JwtImpl:
         # 构造payload
         payload = {
             'username': username,
-            'userrole': userrole,  # 自定义用户ID
+            'rolename': userrole,  # 自定义用户ID
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=7)  # 超时时间
         }
         result = jwt.encode(payload=payload, key=SALT, algorithm="HS256", headers=headers)\

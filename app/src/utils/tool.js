@@ -1,7 +1,9 @@
 /* 处理权限 */
 export const hasPermission = (route, role) => {
   if (route.meta && route.meta.roles) {
-    return route.meta.roles.includes(role);
+    for (const i of role) {
+      return route.meta.roles.includes(i);
+    }
   }
   return true; /* 默认不设权限 */
 };

@@ -14,7 +14,7 @@ instance.interceptors.request.use(
   (config: any) => {
     const user = userStore();
     const token = user.$state.token;
-    console.log(token);
+    // console.log(token);
     token && (config.headers.Authorization = token);
     if (config.methods === "POST") {
       config.data = JSON.stringify(config.data);

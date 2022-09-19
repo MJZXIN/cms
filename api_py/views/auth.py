@@ -1,6 +1,7 @@
 import datetime
+import functools
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, g
 
 from utils import Result, JwtImpl, db
 from views.user import TblUser
@@ -79,14 +80,53 @@ routes_list = [
                     "icon": "Memo",
                     "roles": [
                         "ADMIN",
-                        "SYSTEM",
-                        "USER"
+                        "SYSTEM"
                     ]
                 },
                 "component": "../views/system/role.vue",
                 "children": []
-            },
-            {
+            }, {
+                "path": "post",
+                "name": "岗位管理",
+                "root": False,
+                "meta": {
+                    "title": "岗位管理",
+                    "icon": "Menu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM"
+                    ]
+                },
+                "component": "../views/system/post.vue",
+                "children": []
+            }, {
+                "path": "dept",
+                "name": "部门管理",
+                "root": False,
+                "meta": {
+                    "title": "部门管理",
+                    "icon": "Menu",
+                    "roles": [
+                        "ADMIN",
+                        "SYSTEM"
+                    ]
+                },
+                "component": "../views/system/dept.vue",
+                "children": []
+            }, {
+                "path": "corp",
+                "name": "公司管理",
+                "root": False,
+                "meta": {
+                    "title": "公司管理",
+                    "icon": "Menu",
+                    "roles": [
+                        "SYSTEM"
+                    ]
+                },
+                "component": "../views/system/corp.vue",
+                "children": []
+            }, {
                 "path": "menu",
                 "name": "菜单管理",
                 "root": False,
@@ -103,36 +143,6 @@ routes_list = [
                 "children": []
             },
             {
-                "path": "dept",
-                "name": "部门管理",
-                "root": False,
-                "meta": {
-                    "title": "部门管理",
-                    "icon": "Menu",
-                    "roles": [
-                        "ADMIN",
-                        "SYSTEM",
-                        "USER"
-                    ]
-                },
-                "component": "../views/system/dept.vue",
-                "children": []
-            }, {
-                "path": "post",
-                "name": "岗位管理",
-                "root": False,
-                "meta": {
-                    "title": "岗位管理",
-                    "icon": "Menu",
-                    "roles": [
-                        "ADMIN",
-                        "SYSTEM",
-                        "USER"
-                    ]
-                },
-                "component": "../views/system/post.vue",
-                "children": []
-            }, {
                 "path": "dict",
                 "name": "字典管理",
                 "root": False,
@@ -303,11 +313,12 @@ def login():
     if obj:
         # 校验密码
         if obj.chek_password(raw_password=password):
-            token = JwtImpl.create_token(obj.username, obj.userrole)
+            token = JwtImpl.create_token(obj.username, obj.rolename)
             obj.login_date = datetime.datetime.now()
             obj.login_ip = request.remote_addr
             db.session.flush()
-            userinfo = {"username": obj.username, "userrole": obj.userrole}
+            userinfo = {"username": obj.username, "rolename": obj.rolename.split(':')}
+            # routes =
             return Result.SUCCESS(data={"token": token, "userinfo": userinfo, "routes": routes_list}, msg="登录成功")
         else:
             return Result.ERROR(msg="账号或密码错误")
@@ -322,7 +333,7 @@ def reg():
     obj = TblUser.query.filter(TblUser.username == username).first()
     if obj:
         return Result.ERROR(msg="用户名已存在")
-    obj = TblUser(username=username, password=password, userrole='USER')
+    obj = TblUser(username=username, password=password, rolename='USER')
     db.session.add(obj)
     db.session.flush()
     return Result.SUCCESS(msg="注册成功")
