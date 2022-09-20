@@ -190,7 +190,26 @@ def getRole(page):
     posts = pagination.items
     res = {
         "data_list": [],
-        "total_page": 0
+        "total_page": 0,
+        "menu_list": [{
+            "name": "看板",
+            "value": "dashboard",
+            "children": [{
+                "name": "看板",
+                "value": "dashboard"
+            }]
+        }, {
+            "name": "系统管理",
+            "value": "system",
+            "children": [{
+                "name": "用户管理",
+                "value": "user"
+            }, {
+                "name": "角色管理",
+                "value": "role"
+            }]
+        }]
+
     }
     for i in posts:
         res["data_list"].append(i.to_dict())

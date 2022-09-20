@@ -20,9 +20,10 @@
     <el-table-column prop="part_type" label="零件类型" width="80" />
     <el-table-column prop="whshname" label="零件位置" width="80" />
     <el-table-column prop="part_cost" label="零件价格" width="80" />
+    <el-table-column prop="part_brand" label="品牌" width="80" />
     <el-table-column label="状态" width="60">
       <template #default="scope">
-        <el-tag v-if="scope.status">禁用</el-tag>
+        <el-tag v-if="scope.status">缺货</el-tag>
         <el-tag v-else>正常</el-tag>
       </template>
     </el-table-column>

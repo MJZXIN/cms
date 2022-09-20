@@ -1,7 +1,6 @@
 import datetime
-import functools
 
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request
 
 from utils import Result, JwtImpl, db
 from views.user import TblUser
@@ -13,6 +12,7 @@ routes_list = [
         "path": "/",
         "name": "home",
         "root": True,
+        "hidden": False,
         "meta": {
             "title": "首页",
             "icon": "Monitor",
@@ -27,6 +27,7 @@ routes_list = [
             "path": "",
             "name": "overview",
             "root": False,
+            "hidden": False,
             "meta": {
                 "title": "看板",
                 "icon": "Monitor",
@@ -44,6 +45,7 @@ routes_list = [
         "path": "/system",
         "name": "系统管理",
         "root": True,
+        "hidden": False,
         "meta": {
             "title": "系统管理",
             "icon": "Setting",
@@ -59,6 +61,7 @@ routes_list = [
                 "path": "user",
                 "name": "用户设置",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "用户管理",
                     "icon": "Memo",
@@ -75,6 +78,7 @@ routes_list = [
                 "path": "role",
                 "name": "角色设置",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "角色管理",
                     "icon": "Memo",
@@ -89,6 +93,7 @@ routes_list = [
                 "path": "post",
                 "name": "岗位管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "岗位管理",
                     "icon": "Menu",
@@ -103,6 +108,7 @@ routes_list = [
                 "path": "dept",
                 "name": "部门管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "部门管理",
                     "icon": "Menu",
@@ -117,6 +123,7 @@ routes_list = [
                 "path": "corp",
                 "name": "公司管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "公司管理",
                     "icon": "Menu",
@@ -130,6 +137,7 @@ routes_list = [
                 "path": "menu",
                 "name": "菜单管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "菜单管理",
                     "icon": "Menu",
@@ -146,6 +154,7 @@ routes_list = [
                 "path": "dict",
                 "name": "字典管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "字典管理",
                     "icon": "Menu",
@@ -162,6 +171,7 @@ routes_list = [
                 "path": "config",
                 "name": "参数设置",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "参数设置",
                     "icon": "Menu",
@@ -178,6 +188,7 @@ routes_list = [
                 "path": "setting",
                 "name": "系统设置",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "系统设置",
                     "icon": "Memo",
@@ -196,6 +207,8 @@ routes_list = [
         "path": "/product",
         "name": "产品管理",
         "root": True,
+
+        "hidden": False,
         "meta": {
             "title": "产品管理",
             "icon": "SetUp",
@@ -211,6 +224,7 @@ routes_list = [
                 "path": "",
                 "name": "产品管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "产品管理",
                     "icon": "SetUp",
@@ -227,6 +241,7 @@ routes_list = [
                 "path": "part",
                 "name": "零件管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "零件管理",
                     "icon": "SetUp",
@@ -243,6 +258,7 @@ routes_list = [
                 "path": "cost",
                 "name": "成本管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "成本管理",
                     "icon": "Notebook",
@@ -258,6 +274,7 @@ routes_list = [
                 "path": "bom",
                 "name": "BOM管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "BOM管理",
                     "icon": "Guide",
@@ -273,6 +290,7 @@ routes_list = [
                 "path": "warehouse",
                 "name": "仓库管理",
                 "root": False,
+                "hidden": False,
                 "meta": {
                     "title": "仓库管理",
                     "icon": "Guide",
@@ -290,6 +308,7 @@ routes_list = [
         "path": "/about",
         "name": "about",
         "root": True,
+        "hidden": False,
         "meta": {
             "title": "关于",
             "icon": "Help",
@@ -304,6 +323,7 @@ routes_list = [
             "path": "",
             "name": "关于",
             "root": False,
+            "hidden": False,
             "meta": {
                 "title": "关于",
                 "icon": "Help",
@@ -321,6 +341,7 @@ routes_list = [
         "path": "/:catchAll(.*)",
         "name": "404",
         "root": True,
+        "hidden": True,
         "meta": {
             "title": "404",
             "icon": "IconMenu",

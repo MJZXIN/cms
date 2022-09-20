@@ -56,6 +56,15 @@
       ><el-form-item label="权限字符">
         <el-input v-model="formData.rolecode" />
       </el-form-item>
+      <el-form-item label="菜单权限">
+        <el-tree
+          :props="menuList"
+          :load="loadNode"
+          lazy
+          show-checkbox
+          @check-change="handleCheckChange"
+        />
+      </el-form-item>
       <el-form-item label="状态">
         <el-radio-group v-model="formData.status">
           <el-radio label="1">正常</el-radio>
@@ -83,6 +92,7 @@ export default {
       total_page: 1,
       loading: false,
       dialogVisible: false,
+      menuList: [],
       formData: {
         rolename: "",
         rolecode: "",
@@ -97,6 +107,7 @@ export default {
         .then((res) => {
           this.tableData = res.data.data_list;
           this.total_page = res.data.total_page;
+          this.menuList = res.data.menu_list;
           this.loading = false;
         })
         .catch(() => {
@@ -115,6 +126,12 @@ export default {
             type: "warning",
           });
         });
+    },
+    loadNode(node, resolve) {
+      console.log(node);
+    },
+    handleCheckChange(data, checked, indeterminate) {
+      console.log(data, checked, indeterminate);
     },
   },
   created() {

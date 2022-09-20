@@ -145,8 +145,42 @@ class TblPart(db.Model):
     total_number = db.Column(db.Integer, server_default=text("0"))
     # 部件规格Specification
     part_spec = db.Column(db.String(256), server_default="")
+    # 品牌
+    part_brand = db.Column(db.String(128), server_default="")
     # 仓库位置
-    whshname = db.Column(db.String(128), server_default=text("0"))
+    whshname = db.Column(db.String(128), server_default=text(""))
+
+    create_by = db.Column(db.String(128), server_default="")
+    update_by = db.Column(db.String(128), server_default="")
+    status = db.Column(db.CHAR(1), server_default="1")
+    del_flag = db.Column(db.CHAR(1), server_default=text('0'))
+    _date = db.Column(DATETIME(fsp=3), server_default=func.now(3), name="date")
+
+    @property
+    def date(self):
+        return self._date.strftime("%Y-%m-%d %H:%M:%S")
+
+    def to_dict(self):
+        return {i.name: getattr(self, i.name) for i in self.__table__.columns}
+
+
+class TblProd(db.Model):
+    __tablename__ = 'tbl_prod'
+    uid = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    # 部件名称
+    prodname = db.Column(db.String(128), server_default="", nullable=False)
+    # 部件价格
+    prod_cost = db.Column(db.Float, server_default=text("0"))
+    # 部件类型:原料/半成品
+    # prod_type = db.Column(db.String(128), server_default="")
+    # 部件数量
+    total_number = db.Column(db.Integer, server_default=text("0"))
+    # 部件规格Specification
+    prod_spec = db.Column(db.String(256), server_default="")
+    # 品牌
+    prod_brand = db.Column(db.String(128), server_default="")
+    # 仓库位置
+    whshname = db.Column(db.String(128), server_default=text(""))
 
     create_by = db.Column(db.String(128), server_default="")
     update_by = db.Column(db.String(128), server_default="")

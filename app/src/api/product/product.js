@@ -3,14 +3,14 @@ import { axios } from "utils/axios/request";
 const getProduct = (page) => {
   return axios({
     method: "get",
-    url: "/product/product/" + page,
+    url: "/product/prod/" + page,
   });
 };
 
 const addProduct = (form) => {
   return axios({
     method: "post",
-    url: "/product/product",
+    url: "/product/prod",
     data: form,
   });
 };

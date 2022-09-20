@@ -1,6 +1,6 @@
 from flask import Blueprint, request, g
 
-from utils import Result, TblPart, TblWhsh, has_roles, TblDept, db, TblCorp
+from utils import Result, TblPart, TblWhsh, has_roles, TblProd, db, TblCorp
 
 product = Blueprint("product", __name__)
 
@@ -46,6 +46,37 @@ def addPart():
     db.session.add(obj)
     db.session.flush()
     return Result.SUCCESS(msg="添加成功")
+
+
+@product.route("/prod/<int:page>")
+@has_roles(["SYSTEM", "ADMIN"])
+def getProd(page):
+    pagination = TblProd.query.filter().paginate(page, per_page=5, error_out=False)
+    posts = pagination.items
+    res = {
+        "data_list": [],
+        "total_page": 0,
+        "whsh_list": []
+    }
+
+    whshDB = TblWhsh.query.filter().group_by(TblWhsh.corpname).all()
+    for i in posts:
+        res["data_list"].append(i.to_dict())
+
+    cur_whsh = ""
+    for whsh in whshDB:
+        if cur_whsh != whsh.whshname:
+            res["whsh_list"].append({
+                "label": whsh.corpname,
+                "value": whsh.corpname,
+                "children": []
+            })
+        res["whsh_list"][len(res["whsh_list"]) - 1]["children"].append({
+            "label": whsh.whshname,
+            "value": whsh.whshname,
+        })
+    res["total_page"] = pagination.pages
+    return Result.SUCCESS(data=res, msg="")
 
 
 @product.route("/whsh/<int:page>")

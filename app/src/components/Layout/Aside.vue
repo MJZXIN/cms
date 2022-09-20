@@ -45,7 +45,7 @@ let menuList = JSON.parse(user.$state.routes);
 function filterMenu() {
   let newList = [];
   for (const i of menuList) {
-    if (i.name != "404") {
+    if (!i.hidden) {
       newList.push(i);
     }
     if (i.name == "home") {
