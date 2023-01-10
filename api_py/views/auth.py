@@ -204,13 +204,13 @@ routes_list = [
         ]
     },
     {
-        "path": "/product",
-        "name": "产品管理",
+        "path": "/master",
+        "name": "主数据管理",
         "root": True,
 
         "hidden": False,
         "meta": {
-            "title": "产品管理",
+            "title": "主数据管理",
             "icon": "SetUp",
             "roles": [
                 "ADMIN",
@@ -224,9 +224,8 @@ routes_list = [
                 "path": "",
                 "name": "产品管理",
                 "root": False,
-                "hidden": False,
                 "meta": {
-                    "title": "产品管理",
+                    "title": "物料管理",
                     "icon": "SetUp",
                     "roles": [
                         "ADMIN",
@@ -241,7 +240,6 @@ routes_list = [
                 "path": "part",
                 "name": "零件管理",
                 "root": False,
-                "hidden": False,
                 "meta": {
                     "title": "零件管理",
                     "icon": "SetUp",
@@ -254,6 +252,22 @@ routes_list = [
                 "component": "../views/product/part.vue",
                 "children": []
             },
+            # {
+            #     "path": "part",
+            #     "name": "零件管理",
+            #     "root": False,
+            #     "meta": {
+            #         "title": "零件管理",
+            #         "icon": "SetUp",
+            #         "roles": [
+            #             "ADMIN",
+            #             "SYSTEM",
+            #             "USER"
+            #         ]
+            #     },
+            #     "component": "../views/product/part.vue",
+            #     "children": []
+            # },
             {
                 "path": "cost",
                 "name": "成本管理",
@@ -274,7 +288,6 @@ routes_list = [
                 "path": "bom",
                 "name": "BOM管理",
                 "root": False,
-                "hidden": False,
                 "meta": {
                     "title": "BOM管理",
                     "icon": "Guide",
@@ -299,7 +312,7 @@ routes_list = [
                         "SYSTEM",
                     ]
                 },
-                "component": "../views/product/warehouse.vue",
+                "component": "../views/master/warehouse.vue",
                 "children": []
             }
         ]

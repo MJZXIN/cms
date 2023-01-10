@@ -1,0 +1,58 @@
+{
+    "allowJs": true,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "api/*": [
+                "src/api/*"
+            ],
+            "utils/*": [
+                "src/utils/*"
+            ],
+            "enums/*": [
+                "src/enums/*"
+            ],
+            "components/*": [
+                "src/components/*"
+            ],
+            "layouts/*": [
+                "src/layouts/*"
+            ],
+            "pages/*": [
+                "src/pages/*"
+            ],
+            "assets/*": [
+                "src/assets/*"
+            ],
+            "boot/*": [
+                "src/boot/*"
+            ],
+            "store/*": [
+                "src/store/*"
+            ]
+        },
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "jsx": "preserve",
+        "allowJs": true,
+        "types": [
+            "vite/client"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "src/assets/*"
+    ],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "./auto-imports.d.ts"
+    ]
+}

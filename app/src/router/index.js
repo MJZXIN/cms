@@ -67,6 +67,7 @@ router.beforeEach((to, from, next) => {
             router.addRoute(`${item[i].name}`, route);
           }
         }
+        console.table(router.getRoutes())
         registerRouteFresh = false;
         next({ ...to, replace: true });
       } else {

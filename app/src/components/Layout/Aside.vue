@@ -1,30 +1,50 @@
 <template>
   <div class="title">CMS</div>
-  <el-menu
-    :default-active="this.$route.path"
-    :collapse="app.menuCollapse"
-    :collapse-transition="false"
-    :route="true"
-    :unique-opened="true"
-    @select="handleSelect"
-  >
+  <el-menu :default-active="this.$route.path" :collapse="app.menuCollapse" :collapse-transition="false" :route="true"
+    :unique-opened="true" @select="handleSelect">
     <template v-for="(i, index) in menuList">
       <el-menu-item v-if="i.children.length == 0" :index="i.path">
-        <el-icon><component color="#111" :is="i.meta.icon" /></el-icon>
+        <el-icon>
+          <component color="#111" :is="i.meta.icon" />
+        </el-icon>
         <template #title>{{ i.meta.title }}</template>
       </el-menu-item>
 
       <el-sub-menu v-else :index="i.path || '/'">
         <template #title>
-          <el-icon><component color="#111" :is="i.meta.icon" /></el-icon>
+          <el-icon>
+            <component color="#111" :is="i.meta.icon" />
+          </el-icon>
           <span>{{ i.name }}</span>
         </template>
 
         <el-menu-item-group v-for="j in i.children">
-          <el-menu-item :index="i.path + j.path">
-            <el-icon><component color="#111" :is="j.meta.icon" /></el-icon>
-            <span>{{ j.meta.title }}</span></el-menu-item
-          >
+
+          <el-menu-item v-if="j.children.length == 0" :index="j.path">
+            <el-icon>
+              <component color="#111" :is="j.meta.icon" />
+            </el-icon>
+            <span>{{ j.meta.title }}</span>
+          </el-menu-item>
+
+          <el-sub-menu v-else :index="i.path">
+            <template #title>
+              <el-icon>
+                <component color="#111" :is="j.meta.icon" />
+              </el-icon>
+              <span>{{ j.name }}</span>
+            </template>
+
+            <el-menu-item-group v-for="t in j.children">
+              <el-menu-item :index="i.path + '/' + t.path">
+                <el-icon>
+                  <component color="#111" :is="t.meta.icon" />
+                </el-icon>
+                <span>{{ t.meta.title }}</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-sub-menu>
+
         </el-menu-item-group>
       </el-sub-menu>
     </template>
@@ -78,6 +98,7 @@ const handleSelect = (key, keyPath) => {
   for (const i in keyPath) {
     path = path + keyPath[i];
   }
+  console.log(key)
   router.push(key);
   // console.log(key, path, keyPath);
 };

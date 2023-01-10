@@ -1,12 +1,12 @@
 .history
 app/.history/*
-app/node_modules
 app/dist
-api_py/venv
-api_py/.idea
-api_ja/gradle
+app/node_modules
+
 api_py/_pycache_
 api_py/utils/_pycache_
 api_py/views/_pycache_
+
 *.pyc
-node_modules
+
+vite-project/node_modules

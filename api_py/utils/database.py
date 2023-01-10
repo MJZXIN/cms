@@ -202,9 +202,9 @@ class TblWhsh(db.Model):
     # 仓库名称
     whshname = db.Column(db.String(128), server_default="", nullable=False)
     # 公司
-    corpname = db.Column(db.String(128), server_default=text(""))
+    corpname = db.Column(db.String(128), server_default="")
     # 仓库地址
-    address = db.Column(db.String(128), server_default=text("0"))
+    address = db.Column(db.String(128), server_default="")
     # 创建者
     create_by = db.Column(db.String(128), server_default="")
     update_by = db.Column(db.String(128), server_default="")
