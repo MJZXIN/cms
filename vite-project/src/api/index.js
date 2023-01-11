@@ -1,4 +1,4 @@
-import request from '../utils/axios';
+import request from '../utils/axios/axios';
 
 const Api = process.env.BASE_URL || 'http://localhost:5000';
 
