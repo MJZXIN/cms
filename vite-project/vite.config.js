@@ -15,7 +15,7 @@ export default ({ mode }) =>{
       server: {
           host: env.VITE_SERVER_HOST || 'localhost',
           port: env.VITE_SERVER_PORT || 3000,
-          open: env.VITE_SERVER_OPEN | false,
+          open: env.VITE_SERVER_OPEN == 'true' | false,
       },
       envDir: path.resolve(process.cwd(), "env"), 
       resolve: {
@@ -33,13 +33,14 @@ export default ({ mode }) =>{
           vue(),
           viteMockServe({
             mockPath: './src/mock',
-            localEnabled: env.VITE_USE_MOCK || false,
-            prodEnable: env.VITE_USER_CHUNK_MOCK || false,
+            // 无法关闭
+            localEnabled: env.VITE_USE_MOCK == 'true' || false,
+            prodEnable: env.VITE_USER_CHUNK_MOCK == 'true' || false,
             injectCode: `
             import { setupProdMockServer } from './mockProdServer';
             setupProdMockServer();
             `,//如果生产环境开启了 mock 功能,即prodEnabled=true.则该代码会被注入到injectFile对应的文件的底部。默认为main.{ts,js}
-            logger: env.VITE_MOCK_LOG || false
+            logger: env.VITE_MOCK_LOG == 'true' || false
           }),
           AutoImport({
             imports: ['vue'] ,
