@@ -3,12 +3,13 @@
     <button @click="getTestFrom">测试</button>
 </template>
 
-<script>
+<script setup>
 import { getTest } from '../../api'
 
-// function getTestFrom() {
-//     getTest().then((res)=> {
-//         console.log(res.data)
-//     })
-// }
+function getTestFrom() {
+    console.log("按下")
+    getTest().then((res)=> {
+        console.log(res.data)
+    })
+}
 </script>

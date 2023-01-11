@@ -1,10 +1,9 @@
-import request from '../utils/axios/axios';
-
-const Api = process.env.BASE_URL || 'http://localhost:5000';
+import request from '../utils/axios';
 
 const getTest = () => {
+    
     return request({
-        url: Api + '/testApi/test',
+        url: '/testApi/test',
         method: 'get',
     })
 }

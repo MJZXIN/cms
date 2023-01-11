@@ -1,7 +1,7 @@
 {
-    "allowJs": true,
     "compilerOptions": {
         "baseUrl": ".",
+        "outDir": "build",
         "paths": {
             "@/*": [
                 "src/*"
@@ -48,13 +48,15 @@
     },
     "exclude": [
         "node_modules",
-        "src/assets/*"
+        "src/assets/*",
+        "build/**/*"
     ],
     "include": [
+        "src/**/*",
         "src/**/*.ts",
         "src/**/*.d.ts",
         "src/**/*.tsx",
         "src/**/*.vue",
-        "./auto-imports.d.ts"
+        "./auto-imports.d.ts",
     ]
 }

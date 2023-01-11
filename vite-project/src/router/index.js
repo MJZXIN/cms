@@ -38,30 +38,31 @@ const userInfo = userStore.state
 console.log("./router/index: User Token", userInfo.token)
 
 router.beforeEach(async (to, from, next) => {
-    if (userInfo.token) {
-        if (to.path == '/login') {
-            next({
-                path: '/'
-            })
-        } else {
-            // TODO 要删除true
-            if (userInfo.getters['login/getRoutes'].length || to.name != null || true) {
-                next()
-            } else {
-                await addRoutes();
-                next({
-                    ...to,
-                    replace: true
-                })
-            }
-        }
-    } else {
-        if (to.path == '/login') {
-            next()
-        } else {
-            next('/login')
-        }
-    }
+    next()
+    // if (userInfo.token) {
+    //     if (to.path == '/login') {
+    //         next({
+    //             path: '/'
+    //         })
+    //     } else {
+    //         // TODO 要删除true
+    //         if (userInfo.getters['login/getRoutes'].length || to.name != null || true) {
+    //             next()
+    //         } else {
+    //             await addRoutes();
+    //             next({
+    //                 ...to,
+    //                 replace: true
+    //             })
+    //         }
+    //     }
+    // } else {
+    //     if (to.path == '/login') {
+    //         next()
+    //     } else {
+    //         next('/login')
+    //     }
+    // }
 })
 
 NProgress.configure({
