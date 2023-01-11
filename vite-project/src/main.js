@@ -4,6 +4,10 @@ import App from './App.vue'
 import router from "./router"
 import store from './store'
 
+// TODO: 实现国际化
+// import lang_en from 'element-plus/lib/locale/lang/en'
+// import locale from 'element-plus/lib/local'
+
 const app = createApp(App)
 app.use(store)
 app.use(router)

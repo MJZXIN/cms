@@ -1,15 +1,67 @@
 <template>
-    <div>Login</div>
-    <button @click="getTestFrom">测试</button>
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px">
+        <el-form-item label="用户名" prop="username">
+            <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+            <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+    </el-form>
 </template>
+<script>
 
-<script setup>
-import { getTest } from '../../api'
-
-function getTestFrom() {
-    console.log("按下")
-    getTest().then((res)=> {
-        console.log(res.data)
-    })
+export default {
+    data() {
+        var validateUsername = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入用户名'));
+            } else {
+                if (this.ruleForm.password !== '') {
+                    this.$refs.ruleForm.validateField('checkPass');
+                }
+                callback();
+            }
+        };
+        var validatePassword = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入密码'));
+            } else {
+                callback();
+            }
+        };
+        return {
+            ruleForm: {
+                username: 'SYSTEM',
+                password: 'system',
+            },
+            rules: {
+                username: [
+                    { validator: validateUsername, trigger: 'blur' }
+                ],
+                password: [
+                    { validator: validatePassword, trigger: 'blur' }
+                ]
+            }
+        };
+    },
+    methods: {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    console.log(this.$refs)
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        }
+    }
 }
 </script>
