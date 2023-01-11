@@ -34,6 +34,8 @@
                 "src/store/*"
             ]
         },
+        "module": "es2022",
+        "moduleResolution": "Node",
         "lib": [
             "es2015",
             "dom"

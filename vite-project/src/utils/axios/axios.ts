@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+
 // 创建axios实例
 const service = axios.create({
+    baseURL: import.meta.env.BASE_URL,
     timeout: 10000 // 请求超时时间
 })
 
