@@ -1,4 +1,5 @@
 .history
+node_modules
 app/.history/*
 app/dist
 app/node_modules
