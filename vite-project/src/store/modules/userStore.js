@@ -7,8 +7,17 @@ export const userStore = defineStore('USER', {
             token: null,
             routes: []
         }
-    }, persist: {
-        enabled: false,
+    },
+    actions: {
+        setToken(token) {
+            this.token = token
+        },
+        setRoutes(routes) {
+            this.routes = routes
+        }
+    },
+    persist: {
+        enabled: true,
         // key: ["token"],
         // encryptionKey: "xxPqNwkq32Hfm6A9ZM8WFSCZLBX8",
         storage: localStorage,

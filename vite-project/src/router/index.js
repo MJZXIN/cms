@@ -1,44 +1,85 @@
-import userStore from "../store";
 import { createRouter, createWebHistory } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { userStore } from "../store";
+import addRoutes from './addRouter'
 
-const routes = [{
+const routes = [
+{
     path: "/login",
+    name: "Login",
     component: () => import("../views/Login/index.vue"),
     children: [],
     meta: {
         title: '登录页',
         hideMenu: true, //加入hideMenu属性，不展示在侧边栏
-    },
-    name: "Login",
+    }
 },
 {
     path: "/",
+    name: 'Home',
     component: () => import("../views/Home/index.vue"),
     children: [],
     meta: {
         keepalive: true,
         title: "主页",
     },
-    name: 'Home',
     // hideMenu: true,//不展示在侧边栏
     redirect: ''
-}
-]
+},
+{
+    path: "/404",
+    name: "404",
+    component: () => import("../views/Error/404.vue"),
+    children: [],
+    meta: {
+        title: '404',
+        hideMenu: true, //加入hideMenu属性，不展示在侧边栏
+    }
+}]
 
 const router = createRouter({
     history: createWebHistory('/'),
     routes, // `routes: routes` 的缩写
 })
 
-const userInfo = userStore.state
+// console.log(this)
+
 
 //TODO 要删除
-console.log("./router/index: User Token", userInfo.token)
+
+// console.log("./router/index: User Token", userInfo.$state.token)
 
 router.beforeEach(async (to, from, next) => {
-    next()
+    NProgress.start()
+    const userInfo = userStore()
+    if (userInfo.token) {
+        if (to.path == '/login') {
+            // next('/')
+            next()
+        } else {
+            // 能够访问的情况
+            if (router.getRoutes().length > routes.length) {
+
+                console.log("路由中只有2个")
+                next()
+            } else {
+                await addRoutes(router);
+                console.log(router.getRoutes().length)
+                // next()   
+                next({
+                    ...to,
+                    replace: true
+                })
+            }
+        }
+    } else {
+        if (to.path == '/login') {
+            next()
+        }
+        next('/login')
+    }
+
     // if (userInfo.token) {
     //     if (to.path == '/login') {
     //         next({
@@ -78,24 +119,5 @@ router.afterEach((to, from) => {
     NProgress.done();
     document.title = to.meta.title;
 });
-
-const modules = import.meta.glob("../views/**/*.vue");
-for (let item in modules) {
-    console.log(item.split('/'))
-    let str = item.split('/')
-    if (!(item.search('login') || item.search('home'))) {
-        router.addRoute({
-            path: "/" + str[2],
-            component: modules[item],
-            children: [],
-            meta: {
-                title: str[2],
-                hideMenu: true, //加入hideMenu属性，不展示在侧边栏
-            },
-            name: str[2],
-        })
-    }
-}
-console.log(router.getRoutes())
 
 export default router;

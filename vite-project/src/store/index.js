@@ -5,4 +5,7 @@ import { userStore } from "./modules/userStore"
 const store = createPinia()
 store.use(usePersist)
 
-export default store
+export {
+    store,
+    userStore
+}

@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import { store } from './store'
 import router from "./router"
-import store from './store'
+
 
 // TODO: 实现国际化
 // import lang_en from 'element-plus/lib/locale/lang/en'

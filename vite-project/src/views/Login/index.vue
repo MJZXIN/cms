@@ -13,6 +13,10 @@
     </el-form>
 </template>
 <script>
+import { login } from '@/api';
+import { userStore } from 'store';  
+
+const user = userStore()
 
 export default {
     data() {
@@ -21,7 +25,7 @@ export default {
                 callback(new Error('请输入用户名'));
             } else {
                 if (this.ruleForm.password !== '') {
-                    this.$refs.ruleForm.validateField('checkPass');
+                    this.$refs.ruleForm.validateField('password');
                 }
                 callback();
             }
@@ -52,7 +56,10 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    console.log(this.$refs)
+                    login(this.ruleForm).then((res)=> {
+                        user.setToken(res.data.token)
+                        user.setRoutes(res.data.routes)
+                    })
                 } else {
                     console.log('error submit!!');
                     return false;

@@ -1,13 +1,18 @@
 import request from '../utils/axios';
 
-const getTest = () => {
+const login = (params) => {
     
     return request({
-        url: '/testApi/test',
-        method: 'get',
+        url: '/login',
+        method: 'post',
+        data: {
+            "username": params.username,
+            "passwrod": params.password
+        }
     })
+
 }
 
 export {
-    getTest
+    login
 }
