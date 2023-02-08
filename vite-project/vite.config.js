@@ -53,31 +53,15 @@ export default ({ mode }) =>{
           Components({
             resolvers: [ElementPlusResolver()]
           })
-        ]
+        ],
+        css: {
+          preprocessorOptions: {
+            // 全局样式引入
+            scss: {
+              additionalData: '@import "./src/assets/styles/index.scss";',
+              javascriptEnabled: true
+            }
+          }
+        }
     })
   }
-
-// // https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [
-//     vue(),
-//     viteMockServe({
-//       mockPath: './src/mock',
-//       localEnabled: process.env.USE_MOCK || false,
-//       prodEnable: process.env.USER_CHUNK_MOCK || false,
-//       logger: process.env.MOCK_LOG || false
-//     }),
-    
-//     AutoImport({
-//       imports: ['vue'] ,
-//       resolvers: [ElementPlusResolver()],
-//       dts: './auto-import.d.ts',
-//       eslintrc: {
-//         enabled: false
-//       }
-//     }),
-//     Components({
-//       resolvers: [ElementPlusResolver()]
-//     })
-//   ]
-// })

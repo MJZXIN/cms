@@ -12,6 +12,7 @@
         </el-form-item>
     </el-form>
 </template>
+
 <script>
 import { login } from '@/api';
 import { userStore } from 'store';

@@ -28,7 +28,7 @@ const routes = [
         children: [{
             path: "",
             name: 'Home',
-            component: () => import("../views/Layout/home.vue"),
+            component: () => import("../views/Home/index.vue"),
             meta: {
                 keepalive: true,
                 title: "主页",
