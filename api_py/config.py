@@ -1,1 +1,2 @@
 SQLALCHEMY_ECHO = True
+SQLALCHEMY_DATABASE_URI = 'mysql://Festo:Festo4.0@127.0.0.1:3306/cms_db'

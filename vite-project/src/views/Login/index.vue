@@ -14,7 +14,8 @@
 </template>
 <script>
 import { login } from '@/api';
-import { userStore } from 'store';  
+import { userStore } from 'store';
+import router from '@/router';
 
 const user = userStore()
 
@@ -57,8 +58,13 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     login(this.ruleForm).then((res)=> {
-                        user.setToken(res.data.token)
+                        console.log(res.data)
+                        // 是否需要添加 'Bearer '
+                        user.setToken('Bearer ' + res.data.token)
                         user.setRoutes(res.data.routes)
+                        // console.log(this.$router)
+                        // location.href = '/'
+                        this.$router.replace('/')
                     })
                 } else {
                     console.log('error submit!!');

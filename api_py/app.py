@@ -1,7 +1,7 @@
 import functools
 
 import jwt
-from flask import Flask, current_app, request, g
+from flask import Flask, current_app, request, g, jsonify
 from flask_cors import CORS
 import pymysql
 from jwt import exceptions
@@ -9,7 +9,6 @@ from jwt import exceptions
 import config
 from views import *
 from utils import Result, JwtImpl, SALT, db, has_role
-
 
 app = Flask(__name__)
 
@@ -19,7 +18,8 @@ app.register_blueprint(system, url_prefix="/api/system")
 app.register_blueprint(product, url_prefix="/api/product")
 
 app.config.from_object(config)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://Festo:Festo4.0@127.0.0.1:3306/cms_db'
+# 使用注释
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://Festo:Festo4.0@127.0.0.1:3306/cms_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app, supports_credentials=True)
 pymysql.install_as_MySQLdb()
@@ -85,7 +85,6 @@ def jwt_authentication():
             return Result.ERROR(code=403, msg='无身份信息')
 
 
-
 @app.route('/api')
 def version():
     return 'CMS Version 0.1.0'
@@ -94,7 +93,7 @@ def version():
 @app.route('/api/adb')
 def adb():
     db.create_all()
-    return "Done"
+    return Result.SUCCESS('Done')
 
 
 if __name__ == '__main__':

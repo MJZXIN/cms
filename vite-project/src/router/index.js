@@ -5,38 +5,59 @@ import { userStore } from "../store";
 import addRoutes from './addRouter'
 
 const routes = [
-{
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/Login/index.vue"),
-    children: [],
-    meta: {
-        title: '登录页',
-        hideMenu: true, //加入hideMenu属性，不展示在侧边栏
-    }
-},
-{
-    path: "/",
-    name: 'Home',
-    component: () => import("../views/Home/index.vue"),
-    children: [],
-    meta: {
-        keepalive: true,
-        title: "主页",
+    {
+        path: "/login",
+        name: "Login",
+        component: () => import("../views/Login/index.vue"),
+        meta: {
+            title: '登录页',
+            hideMenu: true, //加入hideMenu属性，不展示在侧边栏
+        },
+        children: []
     },
-    // hideMenu: true,//不展示在侧边栏
-    redirect: ''
-},
-{
-    path: "/404",
-    name: "404",
-    component: () => import("../views/Error/404.vue"),
-    children: [],
-    meta: {
-        title: '404',
-        hideMenu: true, //加入hideMenu属性，不展示在侧边栏
-    }
-}]
+    {
+        path: "/",
+        name: 'HomePage',
+        component: () => import("../views/Layout/index.vue"),
+        meta: {
+            keepalive: true,
+            title: "主页",
+        },
+        // hideMenu: true,//不展示在侧边栏
+        redirect: '',
+        children: [{
+            path: "",
+            name: 'Home',
+            component: () => import("../views/Layout/home.vue"),
+            meta: {
+                keepalive: true,
+                title: "主页",
+            },
+            // hideMenu: true,//不展示在侧边栏
+            redirect: '',
+            children: []
+        }]
+    },
+    // {
+    //     path: "/:pathMatch(.*)",
+    //     name: "4041",
+    //     component: () => import("../views/Error/404.vue"),
+    //     children: [],
+    //     meta: {
+    //         title: '404',
+    //         hideMenu: true, //加入hideMenu属性，不展示在侧边栏
+    //     }
+    // },
+    {
+        path: "/404",
+        name: "404",
+        component: () => import("../views/Error/404.vue"),
+        meta: {
+            title: '迷路了',
+            hideMenu: true, //加入hideMenu属性，不展示在侧边栏
+        },
+        children: [],
+    }]
 
 const router = createRouter({
     history: createWebHistory('/'),
@@ -59,10 +80,16 @@ router.beforeEach(async (to, from, next) => {
             next()
         } else {
             // 能够访问的情况
-            if (router.getRoutes().length > routes.length) {
-
-                console.log("路由中只有2个")
-                next()
+            // if (router.getRoutes().length > routes.length) {
+            if (router.getRoutes().length > routes.length + 1) {
+                console.log("路由大于2个")
+                // 不在路由中的地址会显示undefined, 通过这个可以判断404
+                if (to.meta.title == undefined) {
+                    console.log("***404 because this URL: ", to.path)
+                    next('/404')
+                } else {
+                    next()
+                }
             } else {
                 await addRoutes(router);
                 console.log(router.getRoutes().length)

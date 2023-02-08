@@ -7,7 +7,7 @@ const login = (params) => {
         method: 'post',
         data: {
             "username": params.username,
-            "passwrod": params.password
+            "password": params.password
         }
     })
 

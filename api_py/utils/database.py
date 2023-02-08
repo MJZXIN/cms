@@ -138,7 +138,7 @@ class TblPart(db.Model):
     # 部件名称
     partname = db.Column(db.String(128), server_default="", nullable=False)
     # 部件价格
-    part_cost = db.Column(db.Float, server_default=text("0"))
+    part_cost = db.Column(db.Float, server_default=text("0.0"))
     # 部件类型:原料/半成品
     part_type = db.Column(db.String(128), server_default="")
     # 部件数量
@@ -148,7 +148,7 @@ class TblPart(db.Model):
     # 品牌
     part_brand = db.Column(db.String(128), server_default="")
     # 仓库位置
-    whshname = db.Column(db.String(128), server_default=text(""))
+    whshname = db.Column(db.String(128), server_default="")
 
     create_by = db.Column(db.String(128), server_default="")
     update_by = db.Column(db.String(128), server_default="")
@@ -172,7 +172,7 @@ class TblProd(db.Model):
     # 部件价格
     prod_cost = db.Column(db.Float, server_default=text("0"))
     # 部件类型:原料/半成品
-    # prod_type = db.Column(db.String(128), server_default="")
+    prod_type = db.Column(db.String(128), server_default="")
     # 部件数量
     total_number = db.Column(db.Integer, server_default=text("0"))
     # 部件规格Specification
@@ -180,7 +180,7 @@ class TblProd(db.Model):
     # 品牌
     prod_brand = db.Column(db.String(128), server_default="")
     # 仓库位置
-    whshname = db.Column(db.String(128), server_default=text(""))
+    whshname = db.Column(db.String(128), server_default="")
 
     create_by = db.Column(db.String(128), server_default="")
     update_by = db.Column(db.String(128), server_default="")
@@ -206,6 +206,34 @@ class TblWhsh(db.Model):
     # 仓库地址
     address = db.Column(db.String(128), server_default="")
     # 创建者
+    create_by = db.Column(db.String(128), server_default="")
+    update_by = db.Column(db.String(128), server_default="")
+    status = db.Column(db.CHAR(1), server_default="1")
+    del_flag = db.Column(db.CHAR(1), server_default=text('0'))
+    _date = db.Column(DATETIME(fsp=3), server_default=func.now(3), name="date")
+
+    @property
+    def date(self):
+        return self._date.strftime("%Y-%m-%d %H:%M:%S")
+
+    def to_dict(self):
+        return {i.name: getattr(self, i.name) for i in self.__table__.columns}
+
+
+class TblRoute(db.Model):
+    __tablename__ = 'tbl_route'
+    uid = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    path = db.Column(db.String(128), server_default="")
+    rootpath = db.Column(db.String(128), server_default="")
+    name = db.Column(db.String(128), server_default="")
+    root = db.Column(db.String(10), server_default="")
+    hidemenu = db.Column(db.String(10), server_default="")
+    roles = db.Column(db.String(256), server_default="")
+    meta = db.Column(db.String(128), server_default="")
+    title = db.Column(db.String(128), server_default="")
+    icon = db.Column(db.String(128), server_default="")
+    component = db.Column(db.String(128), server_default="")
+    children = db.Column(db.String(10), server_default="")
     create_by = db.Column(db.String(128), server_default="")
     update_by = db.Column(db.String(128), server_default="")
     status = db.Column(db.CHAR(1), server_default="1")

@@ -4,32 +4,45 @@ import { storeToRefs } from "pinia";
 const modules = import.meta.glob("../views/**/*.vue");
 let asyncRoutes = [] //定义数组接收后端返回的路由
 
-async function addRoutes(router) {
-    const userInfo = userStore()
-    for (let item of userInfo.routes) {
-        // console.log({
-        //     path: item.path,
-        //     name: item.name,
-        //     component: modules[item.component],
-        //     children: item.children,
-        //     meta: {
-        //         title: item.meta.title,
-        //         hideMenu: item.meta.hideMenu,
-        //     }
-        // })
-        router.addRoute({
+function checkRouteRoles(router, item) {
+    router.addRoute({
+        path: item.path,
+        name: item.name,
+        hideMenu: item.hideMenu,
+        meta: {
+            title: item.meta.title,
+            hideMenu: item.meta.hideMenu,
+        },
+        component: modules[item.component],
+        children: addChildren(item.children)
+    })
+}
+
+function addChildren(children) {
+    let childrenList = []
+    for (let item of children) {
+        childrenList.push({
             path: item.path,
             name: item.name,
-            component: modules[item.component],
-            children: item.children,
+            hideMenu: item.hideMenu,
             meta: {
                 title: item.meta.title,
                 hideMenu: item.meta.hideMenu,
-            }
+            },
+            component: modules[item.component],
+            children: addChildren(item.children)
         })
     }
-    console.log(router.getRoutes())
+    return childrenList
 }
+
+async function addRoutes(router) {
+    const userInfo = userStore()
+    for (let item of userInfo.routes) {
+        checkRouteRoles(router, item)
+    }
+}
+
 
 export default addRoutes
 

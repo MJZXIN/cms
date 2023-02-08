@@ -9,6 +9,22 @@ class Result:
         self.msg = ''
 
     @classmethod
+    def SUCCESS(cls, msg=''):
+        return jsonify({
+            "code": 200,
+            "data": {},
+            "msg": msg
+        })
+
+    @classmethod
+    def SUCCESS(cls, data={}):
+        return jsonify({
+            "code": 200,
+            "data": data,
+            "msg": ''
+        })
+
+    @classmethod
     def SUCCESS(cls, code=200, data={}, msg=''):
         return jsonify({
             "code": code,
