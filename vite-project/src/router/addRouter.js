@@ -4,42 +4,57 @@ import { storeToRefs } from "pinia";
 const modules = import.meta.glob("../views/**/*.vue");
 let asyncRoutes = [] //定义数组接收后端返回的路由
 
-function checkRouteRoles(router, item) {
-    router.addRoute({
-        path: item.path,
-        name: item.name,
-        hideMenu: item.hideMenu,
-        meta: {
-            title: item.meta.title,
-            hideMenu: item.meta.hideMenu,
-        },
-        component: modules[item.component],
-        children: addChildren(item.children)
-    })
+function checkRouteRoles(rolelist, router, item) {
+    for (let role of rolelist) {
+        if (item.roles.indexOf(role) < 0) {
+            console.log("当前用户无权限使用此路由")
+        } else {
+            router.addRoute({
+                path: item.path,
+                name: item.name,
+                hideMenu: item.hideMenu,
+                meta: {
+                    title: item.meta.title,
+                    hideMenu: item.meta.hideMenu,
+                },
+                component: modules[item.component],
+                children: addChildren(rolelist, item.children)
+            })
+        }
+    }
 }
 
-function addChildren(children) {
+
+function addChildren(rolelist, children) {
     let childrenList = []
     for (let item of children) {
-        childrenList.push({
-            path: item.path,
-            name: item.name,
-            hideMenu: item.hideMenu,
-            meta: {
-                title: item.meta.title,
-                hideMenu: item.meta.hideMenu,
-            },
-            component: modules[item.component],
-            children: addChildren(item.children)
-        })
+        for (let role of rolelist) {
+            if (item.roles.indexOf(role) < 0) {
+                console.log("当前用户无权限使用此路由")
+            } else {
+                childrenList.push({
+                    path: item.path,
+                    name: item.name,
+                    hideMenu: item.hideMenu,
+                    meta: {
+                        title: item.meta.title,
+                        hideMenu: item.meta.hideMenu,
+                    },
+                    component: modules[item.component],
+                    children: addChildren(rolelist, item.children)
+                })
+            }
+        }
     }
+
     return childrenList
 }
 
 async function addRoutes(router) {
     const userInfo = userStore()
+    const userRoles = userInfo.userinfo
     for (let item of userInfo.routes) {
-        checkRouteRoles(router, item)
+        checkRouteRoles(userRoles.rolelist, router, item)
     }
 }
 

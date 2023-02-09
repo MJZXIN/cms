@@ -5,7 +5,11 @@ export const userStore = defineStore('USER', {
     state: () => {
         return {
             token: null,
-            routes: []
+            routes: [],
+            userinfo: {
+                username: '',
+                rolelist: []
+            }
         }
     },
     actions: {
@@ -14,6 +18,9 @@ export const userStore = defineStore('USER', {
         },
         setRoutes(routes) {
             this.routes = routes
+        },
+        setUserInfo(userinfo) {
+            this.userinfo = userinfo
         }
     },
     persist: {

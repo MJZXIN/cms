@@ -1,13 +1,17 @@
 <template>
     <div class="common-layout">
         <el-container>
-            <el-header style="height: 50px;">Header</el-header>
+            <!-- 将会影响 --el-header-height -->
+            <el-header height="50px">Header</el-header>
             <el-container>
+                <!-- 将会影响 --el-aside-width  -->
                 <el-aside width="auto">
                     <Aside></Aside>
                 </el-aside>
                 <el-main>
-                    <RouterView></RouterView>
+                    <el-scrollbar>
+                        <RouterView></RouterView>
+                    </el-scrollbar>
                 </el-main>
             </el-container>
         </el-container>
@@ -24,9 +28,15 @@ export default {
 </script>
 
 <style>
-/* TODO： 尝试修改--el-aside-width的值 */
+.el-header {
+    /* --el-header-height: 50px; */
+    border-bottom: 1px solid #000;
+}
 .el-aside {
   /* width: auto; */
   height: calc(100vh - 50px);
 }
+</style>
+
+<style scoped>
 </style>

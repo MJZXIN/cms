@@ -32,7 +32,7 @@ class TblUser(db.Model):
     _password = db.Column(db.String(256), server_default="", nullable=False, name="password")
     deptname = db.Column(db.String(128), server_default="")
     postname = db.Column(db.String(128), server_default="")
-    rolename = db.Column(db.String(128), server_default="")
+    _rolelist = db.Column(db.String(128), server_default="USER:", name='rolelist')
     # 昵称
     nick_name = db.Column(db.String(128), server_default="")
     create_by = db.Column(db.String(128), server_default="")
@@ -51,6 +51,15 @@ class TblUser(db.Model):
     @property
     def date(self):
         return self._date.strftime("%Y-%m-%d %H:%M:%S")
+
+    @property
+    def rolelist(self):
+        return self._rolelist.split(':')
+
+    # 不知道有没有必要 -> user.py
+    # @property.setter
+    # def rolelist(self, role):
+    #     return self._rolelist
 
     def to_dict(self):
         return {i.name: getattr(self, i.name) for i in self.__table__.columns}

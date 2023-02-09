@@ -364,11 +364,11 @@ def login():
     if res:
         # 校验密码
         if res.chek_password(raw_password=password):
-            token = JwtImpl.create_token(res.username, res.rolename)
+            token = JwtImpl.create_token(res.username, res.rolelist)
             res.login_date = datetime.datetime.now()
             res.login_ip = request.remote_addr
-
-            userinfo = {"username": res.username, "rolename": res.rolename.split(':')}
+            db.session.flush()
+            userinfo = {"username": res.username, "rolelist": res.rolelist}
 
             # routes =
             # for route in routes_list:
@@ -411,8 +411,8 @@ def login():
                         "component": route.component,
                         "children": []
                     })
-            print(routes_list)
-            db.session.flush()
+            # print(routes_list)
+
             return Result.SUCCESS(data={"token": token, "userinfo": userinfo, "routes": routes_list}, msg="登录成功")
         else:
             return Result.ERROR(msg="账号或密码错误")
@@ -427,7 +427,7 @@ def reg():
     obj = TblUser.query.filter(TblUser.username == username).first()
     if obj:
         return Result.ERROR(msg="用户名已存在")
-    obj = TblUser(username=username, password=password, rolename='USER')
+    obj = TblUser(username=username, password=password)
     db.session.add(obj)
     db.session.flush()
     return Result.SUCCESS(msg="注册成功")
@@ -443,7 +443,7 @@ def getInfo():
 
     return Result.SUCCESS(data={
         "username": payload.get("username"),
-        "userrole": payload.get("userrole")
+        "rolelist": payload.get("rolelist")
     }, msg="已登录")
 
 

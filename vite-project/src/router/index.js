@@ -84,12 +84,13 @@ router.beforeEach(async (to, from, next) => {
             if (router.getRoutes().length > routes.length + 1) {
                 console.log("路由大于2个")
                 // 不在路由中的地址会显示undefined, 通过这个可以判断404
-                if (to.meta.title == undefined) {
-                    console.log("***404 because this URL: ", to.path)
-                    next('/404')
-                } else {
-                    next()
-                }
+                // if (to.meta.title == undefined) {
+                //     console.log("***404 because this URL: ", to.path)
+                //     next('/404')
+                // } else {
+                //     next()
+                // }
+                next()
             } else {
                 await addRoutes(router);
                 console.log(router.getRoutes().length)

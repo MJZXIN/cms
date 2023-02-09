@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { userStore } from '@/store'
 
 // 创建axios实例
 const service = axios.create({
@@ -11,9 +12,11 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
     (config: any) => {
-        // if (store.getters.token) {
-        // config.headers['X-Token'] = '12222222'// 让每个请求携带自定义token 请根据实际情况自行修改
-        // }
+        const userInfo = userStore()
+
+        if (userInfo.token) {
+            config.headers['Authorization'] = userInfo.token// 让每个请求携带自定义token 请根据实际情况自行修改
+        }
         return config
     },
     error => {

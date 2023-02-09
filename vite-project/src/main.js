@@ -16,4 +16,12 @@ app.use(router)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+/* 自定义指令 utils/directive/permission/index
+import * as directive from "@/directive";
+
+Object.keys(directive).forEach(key => {
+    app.directive(key, (directive as { [key: string]: Directive })[key]);
+});
+*/
+
 app.mount('#app')

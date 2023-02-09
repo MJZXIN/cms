@@ -1,4 +1,5 @@
 import request from '../utils/axios';
+import { getUserByPage } from './System/user'
 
 const login = (params) => {
     
@@ -14,5 +15,6 @@ const login = (params) => {
 }
 
 export {
-    login
+    login,
+    getUserByPage
 }

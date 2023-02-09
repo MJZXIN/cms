@@ -63,6 +63,7 @@ export default {
                         // 是否需要添加 'Bearer '
                         user.setToken('Bearer ' + res.data.token)
                         user.setRoutes(res.data.routes)
+                        user.setUserInfo(res.data.userinfo)
                         // console.log(this.$router)
                         // location.href = '/'
                         this.$router.replace('/')
