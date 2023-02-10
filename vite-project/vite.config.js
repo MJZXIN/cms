@@ -15,7 +15,7 @@ export default ({ mode }) =>{
       server: {
           host: env.VITE_SERVER_HOST || 'localhost',
           port: env.VITE_SERVER_PORT || 3000,
-          open: env.VITE_SERVER_OPEN == 'true' | false,
+          open: env.VITE_SERVER_OPEN == 'true' || false,
       },
       envDir: path.resolve(process.cwd(), "env"), 
       resolve: {

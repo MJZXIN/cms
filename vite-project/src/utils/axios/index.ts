@@ -4,7 +4,7 @@ import { userStore } from '@/store'
 
 // 创建axios实例
 const service = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL || '/api',
+    baseURL: import.meta.env.VITE_USE_MOCK == 'true' ? import.meta.env.VITE_MOCK_URL : import.meta.env.VITE_BASE_URL,
     timeout: 5000 // 请求超时时间
 })
 
