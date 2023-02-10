@@ -20,6 +20,7 @@ function checkRouteRoles(rolelist, router, item) {
                 component: modules[item.component],
                 children: addChildren(rolelist, item.children)
             })
+            break
         }
     }
 }
@@ -44,6 +45,7 @@ function addChildren(rolelist, children) {
                     children: addChildren(rolelist, item.children)
                 })
             }
+            break
         }
     }
 

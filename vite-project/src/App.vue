@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :locale="locale" :size="size" :z-index="zIndex" autoInsertSpace>
+  <el-config-provider :locale="locale" :size="size" :z-index="zIndex">
     <router-view></router-view>
   </el-config-provider>
 </template>
@@ -9,8 +9,6 @@ import { defineComponent, computed, ref } from 'vue'
 import { ElConfigProvider } from 'element-plus'
 import en from 'element-plus/dist/locale/en.mjs'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-
-
 
 export default defineComponent({
   components: {
@@ -24,13 +22,9 @@ export default defineComponent({
 
     return {
       zIndex: 3000,
-      size: 'small',
+      size: 'default',
       locale: locale
     }
   },
 })
 </script>
-
-<style scoped>
-
-</style>

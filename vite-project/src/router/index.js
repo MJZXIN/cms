@@ -71,6 +71,35 @@ const router = createRouter({
 
 // console.log("./router/index: User Token", userInfo.$state.token)
 
+const whiteList = ['/login']
+// console.log(whiteList.includes('/login'))
+// console.log(whiteList.includes('/'))
+
+router.beforeEach((to, from, next) => {
+    NProgress.start()
+    const userInfo = userStore()
+
+    if (userInfo.token) {
+        // 已添加动态路由
+        if (router.getRoutes().length > routes.length + 1) {
+            next()
+        } else {
+            addRoutes(router)
+            next({
+                ...to,
+                replace: true
+            })
+        }
+    } else {
+        if (whiteList.includes(to.path)) {
+            next()
+        } else {
+            next('/login')
+        }
+    }
+})
+
+/*
 router.beforeEach(async (to, from, next) => {
     NProgress.start()
     const userInfo = userStore()
@@ -92,7 +121,7 @@ router.beforeEach(async (to, from, next) => {
                 // }
                 next()
             } else {
-                await addRoutes(router);
+                addRoutes(router);
                 console.log(router.getRoutes().length)
                 // next()   
                 next({
@@ -133,6 +162,7 @@ router.beforeEach(async (to, from, next) => {
     //     }
     // }
 })
+*/
 
 NProgress.configure({
     easing: "ease", // 动画方式

@@ -54,7 +54,8 @@ const checkMenuRole = () => {
         name: '首页',
         children: []
     })
-    for (let route of userInfo.routes) {
+    const routesTmp = userInfo.routes
+    for (let route of routesTmp) {
         for (let role of rolelist) {
             if (route.roles.indexOf(role) < 0) {
                 console.log("当前无权限使用此菜单")
@@ -62,6 +63,7 @@ const checkMenuRole = () => {
                 route.children = checkSubMenuRole(route.children)
                 routeList.push(route)
             }
+            break
         }
     }
     return routeList
@@ -76,6 +78,7 @@ const checkSubMenuRole = (children: any) => {
                 route.children = checkSubMenuRole(route.children)
                 childrenList.push(route)
             }
+            break
         }
     }
     return childrenList
@@ -85,10 +88,10 @@ const routes = ref(checkMenuRole())
 
 const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
+    // console.log(key, keyPath)
 }
 const handleClose = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
+    // console.log(key, keyPath)
 }
 </script>
 
