@@ -82,6 +82,7 @@ router.beforeEach((to, from, next) => {
     if (userInfo.token) {
         // 已添加动态路由
         if (router.getRoutes().length > routes.length + 1) {
+            //TODO 添加404判断
             next()
         } else {
             addRoutes(router)
