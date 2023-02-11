@@ -15,8 +15,8 @@ export default defineComponent({
     ElConfigProvider,
   },
   setup() {
-    const language = ref('zh-cn')
-    const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
+    const language = ref('zh_cn')
+    const locale = computed(() => (language.value === 'zh_cn' ? zhCn : en))
     
     // language.value = language.value === 'zh-cn' ? 'en' : 'zh-cn'
 

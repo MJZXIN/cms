@@ -43,7 +43,8 @@
         "jsx": "preserve",
         "allowJs": true,
         "types": [
-            "vite/client"
+            "vite/client",
+            "@intlify/unplugin-vue-i18n/messages"
         ]
     },
     "exclude": [
