@@ -6,6 +6,8 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import { viteMockServe } from 'vite-plugin-mock'
 
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+
 // https://vitejs.dev/config/
 export default ({ mode }) =>{
     // 拿到/env中的环境变量配置
@@ -52,7 +54,8 @@ export default ({ mode }) =>{
           }),
           Components({
             resolvers: [ElementPlusResolver()]
-          })
+          }),
+          VueI18nPlugin({ /* options */ })
         ],
         css: {
           preprocessorOptions: {
