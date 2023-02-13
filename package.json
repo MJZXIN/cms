@@ -6,6 +6,9 @@
   "repository": "git@github.com:MJZXIN/ContentManageSystem.git",
   "author": "MJZXIN <mjzxin@outlook.com>",
   "license": "MIT",
+  "scripts": {
+    "commit": "git add . & cz"
+  },
   "devDependencies": {
     "cz-git": "^1.4.1"
   },
