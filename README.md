@@ -18,5 +18,12 @@ yarn build
 
 # 使用
 1. 下载项目
-2. 运行yarn 下载 git cz
-3. 提交: ?
+2. npm install -g commitizen
+3. "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  }
+4. 运行yarn 下载 git cz
+5. 命令行输入cz
+6. 提交: ?
