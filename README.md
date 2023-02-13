@@ -25,5 +25,5 @@ yarn build
     }
   }
 4. 运行yarn 下载 git cz
-5. 命令行输入cz
+5. 命令行输入yarn commit
 6. 提交: ?

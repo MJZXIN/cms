@@ -1,13 +1,2 @@
 .history
 node_modules
-app/.history/*
-app/dist
-app/node_modules
-
-api_py/_pycache_
-api_py/utils/_pycache_
-api_py/views/_pycache_
-
-*.pyc
-
-vite-project/node_modules
